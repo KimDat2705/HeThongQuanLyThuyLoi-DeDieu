@@ -145,8 +145,11 @@ export default function ReportDataPanel({ onClose }) {
             <FiDatabase className={styles.cardIcon} />
             <span className={styles.cardTitle}>Dung tích hồ chứa</span>
           </div>
-          <div className={styles.resTrack}>
-            {reservoirData.minPercent}—{reservoirData.maxPercent}%
+          <div className={styles.resContainer}>
+             <div className={styles.resTrack}>
+               <div className={styles.resFill} style={{ width: `${reservoirData.maxPercent}%` }}></div>
+               <div className={styles.resText}>{reservoirData.minPercent}—{reservoirData.maxPercent}%</div>
+             </div>
           </div>
           <div className={styles.resLbl}>Dung tích thiết kế</div>
         </div>
