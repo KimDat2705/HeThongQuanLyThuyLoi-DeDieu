@@ -1,0 +1,215 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+}
+
+.widgetCard {
+  background: var(--color-surface);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  flex: 1; /* Stretch to fill available vertical space if using flex col */
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.widgetCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.widgetHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--color-border-light);
+  padding-bottom: 10px;
+}
+
+.iconInfo { color: #1976D2; font-size: 16px; }
+.iconGood { color: #2E7D32; font-size: 16px; }
+.iconMuted { color: #757575; font-size: 16px; }
+
+.widgetContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* W1: Weather */
+.weatherAlert {
+  font-size: 13px;
+  font-weight: 600;
+  color: #D32F2F;
+  background: #FFEBEE;
+  padding: 6px 10px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.weatherMetrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #F8F9FA;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: 1px solid #F0F0F0;
+  flex: 1;
+  transition: background 0.2s;
+}
+
+.metric:hover {
+  background: #F0F4F8;
+}
+
+.mLabel { font-size: 11px; color: var(--color-text-secondary); text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600; }
+.mValue { font-size: 16px; font-weight: 800; color: var(--color-text-primary); }
+
+/* W2: Readiness */
+.scoreContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.scoreCircle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid #4CAF50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.scoreValue { font-size: 20px; font-weight: 900; line-height: 1; color: #2E7D32; }
+.scoreUnit { font-size: 9px; font-weight: 700; color: #666; text-transform: uppercase; }
+
+.scoreBars {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.barRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.barRow span { width: 60px; flex-shrink: 0; }
+
+.barTrack {
+  flex: 1;
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: 3px;
+}
+
+/* W2: Project Progress (Mini) */
+.progressWidget {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.progressMain {
+  flex-shrink: 0;
+}
+
+.progressCircle {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  border: 6px solid #2196F3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.progressVal {
+  font-size: 18px;
+  font-weight: 900;
+  color: #1565C0;
+  line-height: 1;
+}
+
+.progressLbl {
+  font-size: 9px;
+  font-weight: 700;
+  color: #666;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.progressStats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pStatRow {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pStatLabel {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.pDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.pStatBar {
+  height: 6px;
+  background: #E0E0E0;
+  border-radius: 3px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.pBarFill {
+  height: 100%;
+  border-radius: 3px;
+}

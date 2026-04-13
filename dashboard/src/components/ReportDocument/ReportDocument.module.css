@@ -1,0 +1,299 @@
+/* ============================================
+   REPORT DOCUMENT — Styled giống văn bản hành chính
+   ============================================ */
+
+.documentArea {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  background: #EAEAEA;
+  padding: 24px;
+  display: flex;
+  justify-content: center;
+}
+
+/* The "paper" sheet */
+.paper {
+  width: 100%;
+  max-width: 800px;
+  background: #FFFFFF;
+  border-radius: 4px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.12);
+  padding: 48px 56px;
+  font-family: 'Times New Roman', 'Noto Serif', serif;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #1a1a1a;
+  height: fit-content;
+}
+
+/* ===== HEADER ===== */
+.docHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.docHeaderLeft {
+  text-align: center;
+  flex: 0 0 42%;
+}
+
+.docHeaderRight {
+  text-align: center;
+  flex: 0 0 50%;
+}
+
+.orgNameSub {
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.orgName {
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.orgDivider {
+  width: 60px;
+  height: 2px;
+  background: #1a1a1a;
+  margin: 6px auto 10px;
+}
+
+.docNumber {
+  font-size: 13px;
+}
+
+.nationTitle {
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.nationMotto {
+  font-weight: 700;
+  font-size: 13px;
+  font-style: italic;
+}
+
+.nationDivider {
+  width: 120px;
+  height: 2px;
+  background: #1a1a1a;
+  margin: 6px auto 10px;
+}
+
+.docDate {
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ===== TITLE ===== */
+.docTitleBlock {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.docTitle {
+  font-size: 18px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  color: #1a1a1a;
+}
+
+.docSubtitle {
+  font-size: 14px;
+  font-style: italic;
+  color: #333;
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto 6px;
+}
+
+.docTimepoint {
+  font-size: 13px;
+  font-style: italic;
+  color: #555;
+}
+
+/* ===== SECTIONS ===== */
+.section {
+  margin-bottom: 20px;
+}
+
+.sectionTitle {
+  font-size: 15px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  color: #1a1a1a;
+}
+
+.subTitle {
+  font-size: 14px;
+  font-weight: 700;
+  margin: 14px 0 6px;
+  font-style: italic;
+}
+
+.paragraph {
+  text-indent: 2em;
+  margin-bottom: 8px;
+  text-align: justify;
+}
+
+.forecastParagraph {
+  text-indent: 2em;
+  margin: 12px 0;
+  padding: 10px 14px;
+  background: #FFF8E1;
+  border-left: 3px solid #F9A825;
+  border-radius: 0 6px 6px 0;
+  font-style: italic;
+}
+
+/* ===== TABLE ===== */
+.docTable {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 12px;
+}
+
+.docTable th,
+.docTable td {
+  border: 1px solid #999;
+  padding: 6px 8px;
+}
+
+.docTable th {
+  background: #F5F5F5;
+  font-weight: 700;
+  font-size: 11px;
+  text-align: center;
+}
+
+.tdCenter {
+  text-align: center;
+}
+
+.stationLabel {
+  font-size: 12px;
+  color: #555;
+  padding-left: 8px;
+}
+
+.compareNote {
+  font-size: 10px;
+  color: #888;
+}
+
+.cellDanger {
+  color: #E53935;
+  font-weight: 700;
+}
+
+.cellWarning {
+  color: #FB8C00;
+  font-weight: 600;
+}
+
+.cellSafe {
+  color: #43A047;
+  font-weight: 600;
+}
+
+.forecastList {
+  list-style: none;
+  padding: 0;
+  margin: 6px 0 0;
+}
+
+.forecastList li {
+  margin-bottom: 4px;
+}
+
+/* ===== ACTION LIST ===== */
+.actionList {
+  list-style: none;
+  padding: 0;
+}
+
+.actionItem {
+  position: relative;
+  padding: 8px 0 8px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.actionItem::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: #888;
+}
+
+.actionDate {
+  font-weight: 600;
+  color: var(--color-info);
+}
+
+/* ===== FOOTER ===== */
+.docFooter {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  padding-top: 20px;
+}
+
+.footerLeft {
+  flex: 0 0 50%;
+  font-size: 12px;
+}
+
+.footerLabel {
+  font-weight: 700;
+  font-size: 12px;
+  font-style: italic;
+  margin-bottom: 4px;
+}
+
+.footerRecipients {
+  font-size: 11px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.footerRight {
+  flex: 0 0 40%;
+  text-align: center;
+}
+
+.footerPosition {
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+}
+
+.footerSubPosition {
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.footerSignature {
+  font-style: italic;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 6px;
+}
+
+.footerName {
+  font-weight: 700;
+  font-size: 14px;
+}

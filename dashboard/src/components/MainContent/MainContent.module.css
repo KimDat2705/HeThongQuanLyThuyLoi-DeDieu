@@ -1,0 +1,236 @@
+/* ============================================
+   MAIN CONTENT — Executive Status Board
+   ============================================ */
+
+.mainContent {
+  margin-left: var(--sidebar-width);
+  margin-right: var(--chatpanel-width);
+  margin-top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  overflow-y: auto;
+  padding: 24px 28px;
+  background: var(--color-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* ===== BLOCK 1: Tình trạng chung ===== */
+.overallBlock {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px 28px;
+  border-radius: var(--radius-lg);
+  border: 1px solid transparent;
+}
+
+.overallEmoji {
+  font-size: 44px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.overallInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.overallLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+}
+
+.overallValueRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.overallValue {
+  font-size: 28px;
+  font-weight: 900;
+  line-height: 1.1;
+}
+
+.overallDate {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* Animations cho hạt Pulse */
+@keyframes pulseGlow {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 0, 0, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 0, 0, 0); }
+}
+
+.pulseDot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: pulseGlow 2s infinite;
+}
+
+/* ===== BLOCK 2: 3 KPI ===== */
+.kpiRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.kpiCard {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: 22px 20px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.kpiLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+.kpiValueRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.kpiValue {
+  font-size: 38px;
+  font-weight: 900;
+  color: var(--color-text-primary);
+  line-height: 1;
+}
+
+.kpiUnit {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+.kpiStatus {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ===== BLOCK 3: TRẠM BƠM TRỌNG ĐIỂM (GRID) ===== */
+.stationSection {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-md);
+  padding: 18px 24px;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.sectionTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stationGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.stationCard {
+  background: #FAFAFA;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stationCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  background: #FFF;
+}
+
+.stationHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.stationTitle {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.stationTag {
+  font-size: 10px;
+  font-weight: 800;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 12px;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+.stationLocation {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.stationDesc {
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* ===== BLOCK 4: Bản đồ ===== */
+.mapCard {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  height: 500px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.mapTitle {
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  border-bottom: 1px solid var(--color-border-light);
+  flex-shrink: 0;
+}
+
+.mapBody {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}

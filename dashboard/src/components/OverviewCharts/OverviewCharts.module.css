@@ -1,0 +1,142 @@
+.chartsRow {
+  display: flex;
+  gap: 16px;
+}
+
+.chartCard {
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(0,0,0,0.06);
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.barCard {
+  flex: 1.6; /* takes more width for timeline chart */
+}
+
+.pieCard {
+  flex: 1; /* less width for donut chart */
+}
+
+.chartCard:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+.chartHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.chartTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.chartLegend {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+}
+
+.legendBox {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legendLine {
+  width: 14px;
+  border-bottom: 2px dashed;
+}
+
+.chartContainer {
+  flex: 1;
+  min-height: 220px;
+  width: 100%;
+}
+
+.donutCenter {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  pointer-events: none; /* Ensures mouse passes through to the chart */
+  z-index: 10;
+}
+
+.donutVal {
+  font-size: 24px;
+  font-weight: 800;
+  color: #2E7D32;
+  line-height: 1;
+}
+
+.donutLabel {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+/* Custom Legend for Pie Chart */
+.pumpLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+
+.pumpLegendItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pumpDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.pumpName {
+  font-size: 13px;
+  font-weight: 600;
+  flex: 1;
+  color: var(--color-text-secondary);
+}
+
+.pumpVal {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .chartsRow {
+    flex-direction: column;
+  }
+}

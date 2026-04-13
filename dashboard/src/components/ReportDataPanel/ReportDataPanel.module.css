@@ -1,0 +1,319 @@
+/* ============================================
+   REPORT DATA PANEL — Styles (Phiên bản 7 card)
+   ============================================ */
+
+.panel {
+  width: 300px;
+  min-width: 300px;
+  height: 100%;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  animation: fadeSlideIn 0.35s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateX(-20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.panelHeader {
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  border-bottom: 1px solid var(--color-border-light);
+  background: var(--color-primary-pale);
+  flex-shrink: 0;
+}
+
+.panelHeaderIcon { font-size: 16px; }
+
+.closeBtn {
+  margin-left: auto;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-round);
+  background: rgba(0,0,0,0.06);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+.closeBtn:hover {
+  background: var(--color-danger-bg);
+  color: var(--color-danger);
+}
+
+.panelScroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ===== Card base ===== */
+.card {
+  background: #FFFFFF;
+  border: 1px solid var(--color-border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  box-shadow: var(--shadow-sm);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.cardIcon { font-size: 14px; color: var(--color-primary); }
+.cardTitle { font-size: 13px; font-weight: 700; color: var(--color-text-primary); }
+.cardSubtitle { font-size: 11px; color: var(--color-text-secondary); margin-bottom: 10px; line-height: 1.4; }
+.cardNote { font-size: 11px; color: var(--color-text-secondary); margin-top: 6px; }
+
+/* ===== Storm grid ===== */
+.stormGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.stormItem {
+  padding: 8px;
+  border-radius: var(--radius-sm);
+  background: #FFF3E0;
+  text-align: center;
+}
+
+.stormValue { font-size: 14px; font-weight: 800; color: #E65100; }
+.stormLabel { font-size: 9px; color: #BF360C; font-weight: 600; margin-top: 2px; }
+
+/* ===== Rainfall grid ===== */
+.rainfallGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+}
+
+.rainfallItem {
+  padding: 8px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-info-bg);
+  text-align: center;
+}
+
+.rainfallMax { background: #FFEBEE; }
+.rainfallMin { background: var(--color-success-bg); }
+.rainfallValue { font-size: 14px; font-weight: 800; color: var(--color-text-primary); }
+.rainfallLabel { font-size: 9px; color: var(--color-text-secondary); margin-top: 2px; line-height: 1.3; }
+
+/* ===== Status grid ===== */
+.statusGrid {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.statusItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.statusWarning { background: var(--color-warning-bg); color: var(--color-warning); }
+.statusSafe { background: var(--color-success-bg); color: var(--color-success); }
+.statusNum { font-size: 18px; font-weight: 800; }
+.statusText { font-size: 10px; }
+
+/* ===== Water table ===== */
+.waterTable { margin-top: 8px; }
+.waterTable table { width: 100%; border-collapse: collapse; font-size: 11px; }
+.waterTable th {
+  text-align: left;
+  padding: 5px 4px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.waterTable td {
+  padding: 5px 4px;
+  border-bottom: 1px solid var(--color-border-light);
+  vertical-align: top;
+}
+
+.stationName { font-weight: 600; color: var(--color-text-primary); font-size: 11px; }
+.riverName { font-size: 9px; color: var(--color-text-muted); }
+.valueCell { font-weight: 700; color: var(--color-primary); font-size: 12px; }
+
+/* Status badges */
+.statusDanger {
+  display: inline-block;
+  padding: 2px 5px;
+  background: #FFEBEE;
+  color: var(--color-danger);
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.statusWarningBadge {
+  display: inline-block;
+  padding: 2px 5px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.statusSafeBadge {
+  display: inline-block;
+  padding: 2px 5px;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.forecastBadge {
+  margin-top: 10px;
+  padding: 8px 10px;
+  background: var(--color-warning-bg);
+  color: var(--color-warning);
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* ===== Reservoir ===== */
+.reservoirBar { margin-top: 4px; }
+.reservoirTrack {
+  width: 100%;
+  height: 28px;
+  background: #F0F0F0;
+  border-radius: 14px;
+  overflow: hidden;
+}
+.reservoirFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary-dark), var(--color-primary-light));
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.reservoirFill span { font-size: 11px; font-weight: 700; color: #FFFFFF; }
+.reservoirLabel { text-align: center; font-size: 10px; color: var(--color-text-muted); margin-top: 4px; }
+
+/* ===== Pump station ===== */
+.pumpTotal {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  margin-bottom: 10px;
+}
+.pumpTotalNum { font-size: 28px; font-weight: 800; color: var(--color-primary); line-height: 1; }
+.pumpTotalLabel { font-size: 12px; color: var(--color-text-secondary); font-weight: 600; }
+
+.pumpLegend {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.pumpRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-round);
+  flex-shrink: 0;
+}
+.pumpName { flex: 1; color: var(--color-text-secondary); }
+.pumpVal { font-weight: 700; color: var(--color-text-primary); }
+
+/* ===== Incidents ===== */
+.incidentSection {
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-light);
+}
+.incidentSection:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+
+.incidentTitle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 6px;
+}
+
+.incidentIcon { font-size: 14px; color: var(--color-warning); }
+.incidentPin { font-size: 12px; color: var(--color-danger); flex-shrink: 0; margin-top: 2px; }
+
+.incidentRow {
+  display: flex;
+  gap: 6px;
+  padding: 3px 0;
+  align-items: flex-start;
+}
+.incidentLocation { font-size: 11px; font-weight: 600; color: var(--color-text-primary); }
+.incidentDetail { font-size: 10px; color: var(--color-text-secondary); }
+
+/* ===== Damage status ===== */
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  background: var(--color-success-bg);
+  color: var(--color-success);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.statusBadgeIcon { font-size: 16px; flex-shrink: 0; }
+
+.tagList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 6px;
+}
+.tag {
+  padding: 2px 8px;
+  background: var(--color-primary-pale);
+  color: var(--color-primary-dark);
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 600;
+}

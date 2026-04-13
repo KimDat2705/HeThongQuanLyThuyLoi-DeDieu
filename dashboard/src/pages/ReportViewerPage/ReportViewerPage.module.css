@@ -1,0 +1,67 @@
+/* ============================================
+   REPORT VIEWER PAGE — Layout
+   ============================================ */
+
+.reportPage {
+  display: flex;
+  margin-left: var(--sidebar-width);
+  margin-top: var(--header-height);
+  height: calc(100vh - var(--header-height));
+  width: calc(100vw - var(--sidebar-width));
+  overflow: hidden;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+              width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* Khi cột Số liệu mở → sidebar ẩn → page chiếm toàn bộ chiều ngang */
+.dataPanelExpanded {
+  margin-left: 0;
+  width: 100vw;
+}
+
+/* Nút mở lại Số liệu trích xuất */
+.reopenBtn {
+  position: absolute;
+  left: 0;
+  top: 12px;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px 8px 10px;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+  color: #FFFFFF;
+  border: none;
+  border-radius: 0 20px 20px 0;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  animation: slideInLeft 0.4s ease-out;
+}
+
+.reopenBtn:hover {
+  transform: translateX(4px);
+  box-shadow: var(--shadow-lg);
+}
+
+.reopenIcon {
+  font-size: 16px;
+}
+
+.reopenLabel {
+  white-space: nowrap;
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
