@@ -193,6 +193,8 @@ export default function ReportDataPanel({ onClose }) {
             </div>
           ))}
 
+          <div className={styles.divider}></div>
+
           <div className={styles.incTitle}>
             <FiAlertTriangle className={styles.incWarningIcon} />
             Sạt trượt: {infrastructureData.thuyLoi.satTruot.length} vị trí (bờ sông Ngũ Huyện Khê)

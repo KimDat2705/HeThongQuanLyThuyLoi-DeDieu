@@ -293,3 +293,9 @@
   margin-top: 10px;
   line-height: 1.5;
 }
+
+.divider {
+  height: 1px;
+  background-color: #E0E0E0;
+  margin: 16px 0 12px 0;
+}
