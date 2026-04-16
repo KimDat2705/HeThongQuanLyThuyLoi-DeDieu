@@ -1,6 +1,6 @@
 /* ============================================
-   REPORT DATA PANEL — Cột trái: Số liệu trích xuất
-   Giao diện kết hợp: 7 Card riêng biệt + Styles tinh chỉnh
+   REPORT DATA PANEL — Accordion Styles
+   Thu gọn / Mở rộng — Gọn gàng & đầy đủ
    ============================================ */
 
 .panel {
@@ -28,7 +28,7 @@
   font-weight: 700;
   color: var(--color-primary-dark);
   border-bottom: 1px solid var(--color-border-light);
-  background: #F1F8F1; /* Tông xanh rất nhạt */
+  background: #F1F8F1;
   flex-shrink: 0;
 }
 
@@ -57,56 +57,129 @@
 .panelScroll {
   flex: 1;
   overflow-y: auto;
-  padding: 14px;
+  padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 6px;
 }
 
-/* ===== Card base ===== */
-.card {
+/* ===== ACCORDION ===== */
+.accordion {
   background: #FFFFFF;
   border: 1px solid var(--color-border-light);
   border-radius: 8px;
-  padding: 14px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  overflow: hidden;
 }
 
-.cardHeader {
+.accHeader {
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 6px;
-  margin-bottom: 12px;
+  padding: 10px 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+.accHeader:hover {
+  background: #F5F9F5;
 }
 
-.cardIcon { font-size: 15px; color: var(--color-primary-dark); }
-.cardTitle { font-size: 13px; font-weight: 800; color: #111; }
-.cardSubtitle { font-size: 11px; color: #555; margin-bottom: 10px; margin-top: -6px; }
+.accIcon {
+  font-size: 14px;
+  color: var(--color-primary-dark);
+  flex-shrink: 0;
+}
+
+.accTitle {
+  font-size: 12px;
+  font-weight: 700;
+  color: #222;
+  white-space: nowrap;
+}
+
+.accBadge {
+  margin-left: auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: #555;
+  background: #F0F0F0;
+  padding: 2px 7px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.accBadgeWarn {
+  background: #FFF3E0;
+  color: #E65100;
+}
+
+.accBadgeSafe {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+
+.accChevron {
+  font-size: 14px;
+  color: #999;
+  flex-shrink: 0;
+  transition: transform 0.25s ease;
+  margin-left: 4px;
+}
+
+.accChevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Accordion body — smooth expand/collapse */
+.accBody {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-out;
+}
+
+.accBodyOpen {
+  max-height: 800px;
+  transition: max-height 0.4s ease-in;
+}
+
+.accContent {
+  padding: 0 12px 12px;
+}
+
+.accSubtitle {
+  font-size: 10px;
+  color: #888;
+  margin-bottom: 8px;
+}
+
+.accSectionLabel {
+  font-size: 11px;
+  font-weight: 700;
+  color: #444;
+  margin-bottom: 6px;
+}
 
 /* ===== Storm grid ===== */
 .stormGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 6px;
 }
 .stormItem {
   background: #FFF3E0;
   border-radius: 6px;
-  padding: 10px 4px;
+  padding: 8px 4px;
   text-align: center;
 }
-.stormVal {
-  color: #E65100;
-  font-weight: 800;
-  font-size: 14px;
-  margin-bottom: 2px;
-}
-.stormLbl {
-  color: #D84315;
-  font-size: 10px;
-}
+.stormVal { color: #E65100; font-weight: 800; font-size: 13px; }
+.stormLbl { color: #D84315; font-size: 9px; margin-top: 1px; }
 
-/* ===== Rainfall grid ===== */
+/* ===== Rainfall ===== */
 .rainGrid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -114,85 +187,54 @@
 }
 .rainItem {
   border-radius: 6px;
-  padding: 10px 6px;
+  padding: 8px 5px;
   text-align: center;
 }
 .bgBlue { background: #E3F2FD; }
 .bgPink { background: #FCE4EC; }
 .bgGreen { background: #E8F5E9; }
+.rainVal { color: #111; font-weight: 800; font-size: 13px; }
+.rainLbl { color: #555; font-size: 9px; margin-top: 2px; line-height: 1.3; }
 
-.rainVal {
-  color: #111;
-  font-weight: 800;
-  font-size: 13px;
-  margin-bottom: 4px;
-}
-.rainLbl {
-  color: #555;
-  font-size: 9px;
-  line-height: 1.3;
-}
-
-/* ===== Water Level Chart Legend ===== */
+/* ===== Water legend ===== */
 .waterLegendList {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  margin-top: 14px;
+  gap: 5px;
+  margin-top: 12px;
 }
 .waterLegendRow {
   display: flex;
   align-items: center;
   font-size: 11px;
 }
-.waterDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
-.waterName {
-  flex: 1;
-  color: #666;
-  font-weight: 600;
-}
-.waterCurrent {
-  font-weight: 800;
-  color: #111;
-  margin-right: 8px;
-}
-.waterDelta {
-  font-weight: 700;
-  width: 38px;
-  text-align: right;
-  font-size: 10px;
-}
+.waterDot { width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; }
+.waterName { flex: 1; color: #666; font-weight: 600; }
+.waterCurrent { font-weight: 800; color: #111; margin-right: 6px; }
+.waterDelta { font-weight: 700; width: 36px; text-align: right; font-size: 10px; }
 .deltaDown { color: #43A047; }
 .deltaUp { color: #E53935; }
 
 .forecastBadge {
   background: #FFF8E1;
   color: #F57F17;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 6px;
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 /* ===== Reservoir ===== */
-.resContainer {
-  margin-top: 4px;
-  margin-bottom: 8px;
-}
+.resContainer { margin-bottom: 6px; }
 .resTrack {
-  height: 28px;
+  height: 26px;
   background: #E8F5E9;
-  border-radius: 14px;
+  border-radius: 13px;
   overflow: hidden;
   position: relative;
   box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
@@ -200,7 +242,7 @@
 .resFill {
   height: 100%;
   background: linear-gradient(90deg, #66BB6A, #2E7D32);
-  border-radius: 14px;
+  border-radius: 13px;
   transition: width 1s ease-out;
 }
 .resText {
@@ -211,111 +253,64 @@
   justify-content: center;
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 13px;
+  font-size: 12px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  letter-spacing: 0.5px;
 }
-.resLbl {
-  text-align: center;
-  color: #888;
-  font-size: 11px;
+.resLbl { text-align: center; color: #888; font-size: 10px; }
+
+/* ===== Divider ===== */
+.divider {
+  height: 1px;
+  background-color: #E0E0E0;
+  margin: 12px 0 10px 0;
 }
 
 /* ===== Pumps ===== */
 .pumpHeaderRow {
   display: flex;
   align-items: baseline;
-  gap: 6px;
-  margin-bottom: 12px;
+  gap: 5px;
+  margin-bottom: 8px;
 }
-.pumpTotalNum {
-  color: var(--color-primary-dark);
-  font-size: 26px;
-  font-weight: 800;
-}
-.pumpTotalLbl {
-  color: #555;
-  font-size: 12px;
-  font-weight: 600;
-}
-.pumpList {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.pumpRow {
-  display: flex;
-  align-items: center;
-  font-size: 12px;
-}
-.pumpDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-right: 8px;
-}
+.pumpTotalNum { color: var(--color-primary-dark); font-size: 24px; font-weight: 800; }
+.pumpTotalLbl { color: #555; font-size: 11px; font-weight: 600; }
+.pumpList { display: flex; flex-direction: column; gap: 6px; }
+.pumpRow { display: flex; align-items: center; font-size: 11px; }
+.pumpDot { width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; }
 .pumpName { color: #666; flex: 1; }
 .pumpVal { font-weight: 800; color: #111; }
 
 /* ===== Incidents ===== */
 .incTitle {
   font-weight: 800;
-  font-size: 12px;
+  font-size: 11px;
   color: #222;
   display: flex;
   align-items: center;
-  gap: 6px;
-  margin-bottom: 10px;
-  margin-top: 14px;
+  gap: 5px;
+  margin-bottom: 8px;
 }
 .incTitle:first-child { margin-top: 0; }
-.incWarningIcon { color: #FB8C00; font-size: 14px; flex-shrink: 0; }
-
-.incRow {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
+.incWarningIcon { color: #FB8C00; font-size: 13px; flex-shrink: 0; }
+.incRow { display: flex; gap: 7px; margin-bottom: 10px; }
 .incRow:last-child { margin-bottom: 0; }
-
-.iconPin { color: #D32F2F; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
-.iconHourglass { color: #D84315; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
-.iconCheck { color: #2E7D32; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
-
-.incLoc {
-  font-weight: 800;
-  color: #444;
-  font-size: 11px;
-}
-.incSub {
-  color: #888;
-  font-size: 11px;
-  margin-top: 3px;
-}
+.iconPin { color: #D32F2F; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+.iconHourglass { color: #D84315; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+.iconCheck { color: #2E7D32; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
+.incLoc { font-weight: 800; color: #444; font-size: 11px; }
+.incSub { color: #888; font-size: 10px; margin-top: 2px; }
 
 /* ===== Damage ===== */
 .dmgBadge {
   background: #E8F5E9;
   color: #2E7D32;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 11px;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 10px 12px;
+  padding: 8px 10px;
   border-radius: 6px;
 }
-.dmgIcon { font-size: 15px; }
-
-.dmgText {
-  color: #888;
-  font-size: 11px;
-  margin-top: 10px;
-  line-height: 1.5;
-}
-
-.divider {
-  height: 1px;
-  background-color: #E0E0E0;
-  margin: 16px 0 12px 0;
-}
+.dmgIcon { font-size: 14px; }
+.dmgText { color: #888; font-size: 10px; margin-top: 8px; line-height: 1.5; }
