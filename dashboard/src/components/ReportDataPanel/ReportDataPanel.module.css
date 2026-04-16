@@ -57,10 +57,11 @@
 .panelScroll {
   flex: 1;
   overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 /* ===== ACCORDION ===== */
@@ -135,20 +136,19 @@
   transform: rotate(180deg);
 }
 
-/* Accordion body — smooth expand/collapse */
+/* Accordion body — hiển thị trực tiếp khi mở */
 .accBody {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease-out;
+  border-top: 1px solid #F0F0F0;
+  animation: fadeIn 0.2s ease-out;
 }
 
-.accBodyOpen {
-  max-height: 800px;
-  transition: max-height 0.4s ease-in;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .accContent {
-  padding: 0 12px 12px;
+  padding: 10px 12px 12px;
 }
 
 .accSubtitle {
