@@ -6,12 +6,13 @@
 .panel {
   width: 300px;
   min-width: 300px;
-  height: 100%;
+  height: calc(100vh - var(--header-height));
   background: var(--color-surface);
   border-right: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   animation: fadeSlideIn 0.35s ease-out;
+  flex-shrink: 0;
 }
 
 @keyframes fadeSlideIn {
@@ -56,12 +57,14 @@
 
 .panelScroll {
   flex: 1;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+}
+
+.panelScroll > * + * {
+  margin-top: 8px;
 }
 
 /* ===== ACCORDION ===== */
