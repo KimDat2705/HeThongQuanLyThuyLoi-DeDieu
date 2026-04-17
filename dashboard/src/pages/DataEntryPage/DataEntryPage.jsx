@@ -34,8 +34,7 @@ export default function DataEntryPage() {
               value={level}
               onChange={(e) => setLevel(e.target.value)}
             >
-              <option value="Xã">Cấp Xã</option>
-              <option value="Huyện">Cấp Huyện</option>
+              <option value="Xã/Phường">Cấp Xã/Phường</option>
               <option value="Tỉnh">Cấp Tỉnh (Sở)</option>
             </select>
           </div>

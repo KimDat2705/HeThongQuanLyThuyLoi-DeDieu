@@ -93,7 +93,7 @@ export const reportArchive = [
         ],
       },
       thuyLoi: {
-        moTa: 'Sự cố sạt trượt tại 04 vị trí bờ hữu sông Ngũ Huyện Khê đoạn qua địa bàn xã Tiên Du.',
+        moTa: 'Sự cố sạt trượt tại 04 vị trí bờ hữu sông Ngũ Khê đoạn qua địa bàn xã Tiên Du.',
         satTruot: [
           { viTri: 'K20+745 - K20+756', dai: '11 m', anSau: '1,0 m', trangThai: 'Đang xử lý' },
           { viTri: 'K20+766 - K20+786', dai: '20 m', anSau: '1,1 m', trangThai: 'Đang xử lý' },
@@ -278,28 +278,28 @@ export const reportArchive = [
     },
   },
 
-  // ═══════════ BÁO CÁO 4: Thiệt hại huyện Gia Bình — Bão số 3 ═══════════
+  // ═══════════ BÁO CÁO 4: Thiệt hại phường Gia Bình — Bão số 3 ═══════════
   {
     id: 'bc-giabinh-100925',
     meta: {
-      coQuanCap: 'UBND HUYỆN GIA BÌNH',
+      coQuanCap: 'UBND PHƯỜNG GIA BÌNH',
       coQuan: 'BAN CHỈ HUY PCTT & TKCN',
       soHieu: '156/BC-BCHPCTT',
       ngay: '10/09/2025',
       tieuDe: 'BÁO CÁO THIỆT HẠI',
-      phuDe: 'Tổng hợp thiệt hại do bão số 3 (Yagi) trên địa bàn huyện Gia Bình',
+      phuDe: 'Tổng hợp thiệt hại do bão số 3 (Yagi) trên địa bàn phường Gia Bình',
       thoiDiemBaoCao: '07/09/2025 đến 10/09/2025',
       nguoiKy: 'Trần Minh Tuấn',
       chucVu: 'TRƯỞNG BAN',
       loaiBaoCao: 'Báo cáo thiệt hại',
-      capHanhChinh: 'Huyện',
+      capHanhChinh: 'Phường',
       trangThai: 'Đã duyệt',
       mucDoUuTien: 'Cao',
       tags: ['Bão', 'Thiệt hại', 'Gia Bình'],
     },
     storm: {
       ten: 'Bão số 3 (Yagi)',
-      viTri: 'Hoàn lưu bão số 3 gây mưa lớn kéo dài, gió giật mạnh trên địa bàn huyện Gia Bình.',
+      viTri: 'Hoàn lưu bão số 3 gây mưa lớn kéo dài, gió giật mạnh trên địa bàn phường Gia Bình.',
       anhHuong: 'Gió giật cấp 8-9 gây đổ cây, tốc mái, ngập úng diện rộng trên địa bàn 8/14 xã, thị trấn.',
       capBao: 8,
       giatCap: 9,
@@ -307,13 +307,13 @@ export const reportArchive = [
       tocDo: 15,
     },
     rainfall: {
-      tongQuat: 'Lượng mưa đo được trên địa bàn huyện Gia Bình từ 07-10/09/2025 là 285,4 mm.',
+      tongQuat: 'Lượng mưa đo được trên địa bàn phường Gia Bình từ 07-10/09/2025 là 285,4 mm.',
       trungBinh: 285.4,
       caoNhat: { tram: 'Xã Nhân Thắng', value: 310.0 },
       thapNhat: { value: 245.0, trams: ['TT Gia Bình'] },
     },
     waterLevel: {
-      moTa: 'Mực nước sông Đuống đoạn qua huyện dâng cao:',
+      moTa: 'Mực nước sông Đuống đoạn qua khu vực dâng cao:',
       duBao: 'Dự kiến nước rút dần trong 2-3 ngày tới.',
       rivers: [
         {
@@ -339,7 +339,7 @@ export const reportArchive = [
     },
     infrastructure: {
       deDieu: {
-        moTa: 'Đê sông Đuống đoạn qua huyện bị thẩm lậu tại 2 vị trí.',
+        moTa: 'Đê sông Đuống đoạn qua khu vực bị thẩm lậu tại 2 vị trí.',
         suCo: [
           { viTri: 'K25+300', tuyen: 'Đê hữu Đuống', diaDiem: 'Xã Đại Lai', loai: 'Thẩm lậu' },
           { viTri: 'K28+100', tuyen: 'Đê hữu Đuống', diaDiem: 'Xã Nhân Thắng', loai: 'Sạt mái đê' },

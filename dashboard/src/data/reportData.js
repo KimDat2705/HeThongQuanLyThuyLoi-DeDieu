@@ -148,7 +148,7 @@ export const infrastructureData = {
     ],
   },
   thuyLoi: {
-    moTa: 'Sự cố sạt trượt tại 04 vị trí bờ hữu sông Ngũ Huyện Khê đoạn qua địa bàn xã Tiên Du:',
+    moTa: 'Sự cố sạt trượt tại 04 vị trí bờ hữu sông Ngũ Khê đoạn qua địa bàn xã Tiên Du:',
     satTruot: [
       { viTri: 'K20+745 - K20+756', dai: '11 m', anSau: '1,0 m', trangThai: 'Đang xử lý' },
       { viTri: 'K20+766 - K20+786', dai: '20 m', anSau: '1,1 m', trangThai: 'Đang xử lý' },
@@ -179,7 +179,7 @@ export const chatMessages = [
   },
   {
     role: 'ai',
-    text: 'Dạ thưa đồng chí, tôi đã tìm thấy **Báo cáo nhanh /BC-SNNMT** (tính đến 06h00 ngày 06/10/2025) của Sở Nông nghiệp và Môi trường.\n\nBáo cáo ghi nhận bão số 11 **cấp 8, giật cấp 10**, đang di chuyển theo hướng Tây Tây Bắc. Lượng mưa TB toàn tỉnh **7,40 mm**, cao nhất tại Cẩm Đàn **66,0 mm**. Trạm Đáp Cầu ghi nhận mực nước **4,37m (vượt BĐ1)**. Hiện có **112 máy bơm tiêu** đang hoạt động. **03 sự cố** đê điều đang theo dõi, **04 điểm sạt trượt** bờ sông Ngũ Huyện Khê.\n\nBáo cáo đã được hiển thị bên cạnh để đồng chí xem chi tiết.',
+    text: 'Dạ thưa đồng chí, tôi đã tìm thấy **Báo cáo nhanh /BC-SNNMT** (tính đến 06h00 ngày 06/10/2025) của Sở Nông nghiệp và Môi trường.\n\nBáo cáo ghi nhận bão số 11 **cấp 8, giật cấp 10**, đang di chuyển theo hướng Tây Tây Bắc. Lượng mưa TB toàn tỉnh **7,40 mm**, cao nhất tại Cẩm Đàn **66,0 mm**. Trạm Đáp Cầu ghi nhận mực nước **4,37m (vượt BĐ1)**. Hiện có **112 máy bơm tiêu** đang hoạt động. **03 sự cố** đê điều đang theo dõi, **04 điểm sạt trượt** bờ sông Ngũ Khê.\n\nBáo cáo đã được hiển thị bên cạnh để đồng chí xem chi tiết.',
     time: '09:15',
     actions: ['📄 Xem toàn bộ', '📊 Trích xuất số liệu', '📥 Tải PDF'],
   },
