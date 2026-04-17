@@ -3,10 +3,8 @@
    ============================================ */
 
 .mainContent {
-  margin-left: var(--sidebar-width);
-  margin-right: var(--chatpanel-width);
-  margin-top: var(--header-height);
-  height: calc(100vh - var(--header-height));
+  width: 100%;
+  height: 100%;
   overflow-y: auto;
   padding: 24px 28px;
   background: var(--color-bg);

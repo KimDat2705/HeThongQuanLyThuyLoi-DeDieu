@@ -33,6 +33,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
   font-size: 14px;
   font-weight: 700;
   color: #FFFFFF;
@@ -40,6 +41,16 @@
 
 .headerLogoIcon {
   font-size: 20px;
+}
+
+.headerLogoIconInside {
+  position: absolute;
+  font-size: 10px;
+  color: #FFFFFF;
+  fill: #FFFFFF;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -30%);
 }
 
 .headerTitle {

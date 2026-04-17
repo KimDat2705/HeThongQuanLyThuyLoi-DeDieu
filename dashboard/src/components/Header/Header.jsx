@@ -1,16 +1,16 @@
 import styles from './Header.module.css';
-import { FiSearch, FiBell, FiHelpCircle } from 'react-icons/fi';
-import { GiWheat } from 'react-icons/gi';
+import { FiSearch, FiBell, FiHelpCircle, FiLogOut, FiShield, FiDroplet } from 'react-icons/fi';
 
-export default function Header() {
+export default function Header({ onLogout }) {
   return (
     <header className={styles.header} id="main-header">
       {/* Left - Logo & Title */}
       <div className={styles.headerLeft}>
         <div className={styles.headerLogo}>
-          <GiWheat className={styles.headerLogoIcon} />
+          <FiShield className={styles.headerLogoIcon} />
+          <FiDroplet className={styles.headerLogoIconInside} />
         </div>
-        <h1 className={styles.headerTitle}>HỆ THỐNG GIÁM SÁT THỦY LỢI & ĐÊ ĐIỀU</h1>
+        <h1 className={styles.headerTitle}>HỆ THỐNG QUẢN LÝ THỦY LỢI VÀ PHÒNG, CHỐNG THIÊN TAI</h1>
       </div>
 
       {/* Center - Search */}
@@ -38,12 +38,20 @@ export default function Header() {
         <div className={styles.headerDivider}></div>
         <div className={styles.headerUser}>
           <div className={styles.headerUserInfo}>
-            <div className={styles.headerUserName}>Cán bộ quản lý</div>
+            <div className={styles.headerUserName}>Admin</div>
             <div className={styles.headerUserRole}>Bắc Ninh HQ</div>
           </div>
           <div className={styles.headerAvatar} id="user-avatar">
             👤
           </div>
+          <button 
+            className={styles.headerIconBtn} 
+            title="Đăng xuất" 
+            onClick={onLogout}
+            style={{ marginLeft: 6, color: '#EF4444' }}
+          >
+            <FiLogOut />
+          </button>
         </div>
       </div>
     </header>

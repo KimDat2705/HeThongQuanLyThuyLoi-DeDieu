@@ -4,20 +4,16 @@
 
 .reportPage {
   display: flex;
-  margin-left: var(--sidebar-width);
-  margin-top: var(--header-height);
-  height: calc(100vh - var(--header-height));
-  width: calc(100vw - var(--sidebar-width));
+  width: 100%;
+  height: 100%;
   overflow: hidden;
-  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1),
-              width 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
 }
 
-/* Khi cột Số liệu mở → sidebar ẩn → page chiếm toàn bộ chiều ngang */
+/* Khi cột Số liệu mở */
 .dataPanelExpanded {
-  margin-left: 0;
-  width: 100vw;
+  width: 100%;
 }
 
 /* Nút mở lại Số liệu trích xuất */

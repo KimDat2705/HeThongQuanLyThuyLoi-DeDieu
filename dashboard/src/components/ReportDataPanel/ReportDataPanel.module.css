@@ -1,6 +1,6 @@
 /* ============================================
-   REPORT DATA PANEL — Accordion Styles
-   Thu gọn / Mở rộng — Gọn gàng & đầy đủ
+   REPORT DATA PANEL — Accordion Styles v3
+   2-line header + smooth max-height transition
    ============================================ */
 
 .panel {
@@ -64,23 +64,29 @@
 }
 
 .panelScroll > * + * {
-  margin-top: 8px;
+  margin-top: 6px;
 }
 
 /* ===== ACCORDION ===== */
 .accordion {
   background: #FFFFFF;
   border: 1px solid var(--color-border-light);
-  border-radius: 8px;
-  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
   overflow: hidden;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
+.accordionOpen {
+  box-shadow: 0 2px 10px rgba(0,0,0,0.07);
+}
+
+/* --- Header: 1-line layout (compact) --- */
 .accHeader {
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
   padding: 10px 12px;
   background: none;
   border: none;
@@ -92,76 +98,87 @@
   background: #F5F9F5;
 }
 
+.accIconWrap {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: #EAF5EA;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.accordionOpen .accIconWrap {
+  background: var(--color-primary-dark);
+}
+
 .accIcon {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-primary-dark);
   flex-shrink: 0;
 }
 
+.accordionOpen .accIcon {
+  color: #fff;
+}
+
+.accHeaderText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
 .accTitle {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
-  color: #222;
+  color: #1a1a1a;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
 }
 
-.accBadge {
-  margin-left: auto;
-  font-size: 10px;
-  font-weight: 700;
-  color: #555;
-  background: #F0F0F0;
-  padding: 2px 7px;
-  border-radius: 10px;
-  white-space: nowrap;
-  flex-shrink: 0;
-}
 
-.accBadgeWarn {
-  background: #FFF3E0;
-  color: #E65100;
-}
-
-.accBadgeSafe {
-  background: #E8F5E9;
-  color: #2E7D32;
-}
 
 .accChevron {
-  font-size: 14px;
-  color: #999;
+  font-size: 16px;
+  color: #bbb;
   flex-shrink: 0;
-  transition: transform 0.25s ease;
-  margin-left: 4px;
+  transition: transform 0.3s ease, color 0.2s ease;
 }
 
 .accChevronOpen {
   transform: rotate(180deg);
+  color: var(--color-primary-dark);
 }
 
-/* Accordion body — hiển thị trực tiếp khi mở */
+/* --- Body: smooth max-height transition --- */
 .accBody {
-  border-top: 1px solid #F0F0F0;
-  animation: fadeIn 0.2s ease-out;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.accBodyInner {
+  border-top: 1px solid #EEF2EE;
 }
 
 .accContent {
-  padding: 10px 12px 12px;
+  padding: 12px 14px 14px;
 }
 
-.accSubtitle {
-  font-size: 10px;
+.accTimeRange {
+  font-size: 11px;
   color: #888;
   margin-bottom: 8px;
 }
 
 .accSectionLabel {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
   color: #444;
   margin-bottom: 6px;
@@ -179,8 +196,8 @@
   padding: 8px 4px;
   text-align: center;
 }
-.stormVal { color: #E65100; font-weight: 800; font-size: 13px; }
-.stormLbl { color: #D84315; font-size: 9px; margin-top: 1px; }
+.stormVal { color: #E65100; font-weight: 800; font-size: 15px; }
+.stormLbl { color: #D84315; font-size: 10.5px; margin-top: 2px; }
 
 /* ===== Rainfall ===== */
 .rainGrid {
@@ -196,8 +213,8 @@
 .bgBlue { background: #E3F2FD; }
 .bgPink { background: #FCE4EC; }
 .bgGreen { background: #E8F5E9; }
-.rainVal { color: #111; font-weight: 800; font-size: 13px; }
-.rainLbl { color: #555; font-size: 9px; margin-top: 2px; line-height: 1.3; }
+.rainVal { color: #111; font-weight: 800; font-size: 14px; }
+.rainLbl { color: #555; font-size: 10.5px; margin-top: 2px; line-height: 1.3; }
 
 /* ===== Water legend ===== */
 .waterLegendList {
@@ -209,12 +226,12 @@
 .waterLegendRow {
   display: flex;
   align-items: center;
-  font-size: 11px;
+  font-size: 12px;
 }
-.waterDot { width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; }
+.waterDot { width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; }
 .waterName { flex: 1; color: #666; font-weight: 600; }
 .waterCurrent { font-weight: 800; color: #111; margin-right: 6px; }
-.waterDelta { font-weight: 700; width: 36px; text-align: right; font-size: 10px; }
+.waterDelta { font-weight: 700; width: 40px; text-align: right; font-size: 11px; }
 .deltaDown { color: #43A047; }
 .deltaUp { color: #E53935; }
 
@@ -223,7 +240,7 @@
   color: #F57F17;
   padding: 7px 10px;
   border-radius: 6px;
-  font-size: 10px;
+  font-size: 11.5px;
   font-weight: 700;
   display: flex;
   align-items: center;
@@ -256,10 +273,10 @@
   justify-content: center;
   color: #FFFFFF;
   font-weight: 800;
-  font-size: 12px;
+  font-size: 13px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.4);
 }
-.resLbl { text-align: center; color: #888; font-size: 10px; }
+.resLbl { text-align: center; color: #888; font-size: 11px; }
 
 /* ===== Divider ===== */
 .divider {
@@ -275,18 +292,18 @@
   gap: 5px;
   margin-bottom: 8px;
 }
-.pumpTotalNum { color: var(--color-primary-dark); font-size: 24px; font-weight: 800; }
-.pumpTotalLbl { color: #555; font-size: 11px; font-weight: 600; }
-.pumpList { display: flex; flex-direction: column; gap: 6px; }
-.pumpRow { display: flex; align-items: center; font-size: 11px; }
-.pumpDot { width: 7px; height: 7px; border-radius: 50%; margin-right: 7px; }
+.pumpTotalNum { color: var(--color-primary-dark); font-size: 26px; font-weight: 800; }
+.pumpTotalLbl { color: #555; font-size: 12px; font-weight: 600; }
+.pumpList { display: flex; flex-direction: column; gap: 7px; }
+.pumpRow { display: flex; align-items: center; font-size: 12px; }
+.pumpDot { width: 8px; height: 8px; border-radius: 50%; margin-right: 7px; }
 .pumpName { color: #666; flex: 1; }
 .pumpVal { font-weight: 800; color: #111; }
 
 /* ===== Incidents ===== */
 .incTitle {
   font-weight: 800;
-  font-size: 11px;
+  font-size: 12.5px;
   color: #222;
   display: flex;
   align-items: center;
@@ -294,21 +311,21 @@
   margin-bottom: 8px;
 }
 .incTitle:first-child { margin-top: 0; }
-.incWarningIcon { color: #FB8C00; font-size: 13px; flex-shrink: 0; }
+.incWarningIcon { color: #FB8C00; font-size: 14px; flex-shrink: 0; }
 .incRow { display: flex; gap: 7px; margin-bottom: 10px; }
 .incRow:last-child { margin-bottom: 0; }
-.iconPin { color: #D32F2F; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
-.iconHourglass { color: #D84315; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
-.iconCheck { color: #2E7D32; font-size: 13px; flex-shrink: 0; margin-top: 2px; }
-.incLoc { font-weight: 800; color: #444; font-size: 11px; }
-.incSub { color: #888; font-size: 10px; margin-top: 2px; }
+.iconPin { color: #D32F2F; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.iconHourglass { color: #D84315; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.iconCheck { color: #2E7D32; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+.incLoc { font-weight: 800; color: #444; font-size: 12px; }
+.incSub { color: #888; font-size: 11px; margin-top: 2px; }
 
 /* ===== Damage ===== */
 .dmgBadge {
   background: #E8F5E9;
   color: #2E7D32;
   font-weight: 700;
-  font-size: 11px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -316,4 +333,4 @@
   border-radius: 6px;
 }
 .dmgIcon { font-size: 14px; }
-.dmgText { color: #888; font-size: 10px; margin-top: 8px; line-height: 1.5; }
+.dmgText { color: #888; font-size: 11px; margin-top: 8px; line-height: 1.5; }

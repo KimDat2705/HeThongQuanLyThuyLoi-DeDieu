@@ -1,0 +1,168 @@
+.pageContainer {
+  padding: 30px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.pageHeader {
+  margin-bottom: 30px;
+}
+
+.pageHeader h1 {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 8px 0;
+}
+
+.pageHeader p {
+  color: #64748B;
+  margin: 0;
+  font-size: 15px;
+}
+
+/* Biểu mẫu Setup / Lọc */
+.setupCard {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  margin-bottom: 30px;
+  border: 1px solid #E2E8F0;
+}
+
+.setupTitle {
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formGroup label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #475569;
+}
+
+.selectBox {
+  padding: 10px 14px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #1E293B;
+  background-color: #F8FAFC;
+  outline: none;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.selectBox:hover {
+  border-color: #94A3B8;
+}
+
+.selectBox:focus {
+  border-color: #2E7D32;
+  box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+  background-color: white;
+}
+
+/* Khung hiển thị Form Động */
+.dynamicFormContainer {
+  background: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border: 1px solid #E2E8F0;
+  min-height: 400px;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #94A3B8;
+  height: 300px;
+}
+
+.emptyIcon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  color: #CBD5E1;
+}
+
+.emptyState h3 {
+  color: #475569;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.emptyState p {
+  max-width: 400px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Các hành động cuối form */
+.formActions {
+  margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.btnCancel {
+  padding: 10px 24px;
+  border: 1px solid #CBD5E1;
+  background: white;
+  color: #475569;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btnCancel:hover {
+  background: #F1F5F9;
+  color: #1E293B;
+}
+
+.btnSubmit {
+  padding: 10px 24px;
+  background: #2E7D32;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
+}
+
+.btnSubmit:hover {
+  background: #1B5E20;
+  box-shadow: 0 4px 6px rgba(46, 125, 50, 0.3);
+}

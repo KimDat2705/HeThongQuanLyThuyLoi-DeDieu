@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { GiWheat } from 'react-icons/gi';
 import {
   FiGrid, FiCloud, FiDroplet, FiFileText,
-  FiMapPin, FiShield, FiBarChart2, FiSettings
+  FiMapPin, FiShield, FiBarChart2, FiSettings, FiEdit
 } from 'react-icons/fi';
 
 const navItems = [
@@ -19,6 +19,7 @@ const navItems = [
       { icon: <FiCloud />, label: 'Dự báo thời tiết' },
       { icon: <FiDroplet />, label: 'Tình hình ngập lụt' },
       { icon: <FiFileText />, label: 'Thiệt hại & Báo cáo', path: '/bao-cao' },
+      { icon: <FiEdit />, label: 'Nhập liệu', path: '/nhap-lieu' },
     ]
   },
   {
