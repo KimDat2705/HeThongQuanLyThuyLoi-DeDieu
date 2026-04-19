@@ -211,10 +211,15 @@ export default function ReportDataPanel({ report, onClose }) {
                 </div>
               ))}
             </div>
+            {chartData.length === 0 && waterLevel.moTa && (
+              <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.5, marginBottom: '10px' }}>
+                {waterLevel.moTa}
+              </div>
+            )}
             {waterLevel.duBao && (
               <div className={styles.forecastBadge}>
-                <HiOutlineSpeakerphone size={16} />
-                {waterLevel.duBao.length > 50 ? waterLevel.duBao.substring(0, 50) + "..." : waterLevel.duBao}
+                <HiOutlineSpeakerphone size={16} style={{ flexShrink: 0, marginTop: '2px' }} />
+                <div>{waterLevel.duBao}</div>
               </div>
             )}
           </AccordionItem>
@@ -246,6 +251,11 @@ export default function ReportDataPanel({ report, onClose }) {
               <span className={styles.pumpTotalNum}>{pump.total}</span>
               <span className={styles.pumpTotalLbl}>máy đang hoạt động</span>
             </div>
+            {(!pump.areas || pump.areas.length === 0) && pump.moTa && (
+              <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.5, marginTop: '10px' }}>
+                 {pump.moTa}
+              </div>
+            )}
             <div className={styles.pumpList}>
               {pump.areas?.map((a, i) => (
                 <div className={styles.pumpRow} key={i}>
@@ -281,6 +291,11 @@ export default function ReportDataPanel({ report, onClose }) {
                 ))}
               </>
             )}
+            {(!infrastructure.deDieu?.suCo || infrastructure.deDieu.suCo.length === 0) && infrastructure.deDieu?.moTa && (
+              <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.5, marginBottom: '8px' }}>
+                <strong>Đê điều:</strong> {infrastructure.deDieu.moTa}
+              </div>
+            )}
 
             {infrastructure.deDieu?.suCo?.length > 0 && infrastructure.thuyLoi?.satTruot?.length > 0 && (
               <div className={styles.divider}></div>
@@ -306,6 +321,11 @@ export default function ReportDataPanel({ report, onClose }) {
                 ))}
               </>
             )}
+            {(!infrastructure.thuyLoi?.satTruot || infrastructure.thuyLoi.satTruot.length === 0) && infrastructure.thuyLoi?.moTa && (
+              <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.5, marginTop: '8px' }}>
+                <strong>Thủy lợi:</strong> {infrastructure.thuyLoi.moTa}
+              </div>
+            )}
           </AccordionItem>
         )}
 
@@ -315,11 +335,17 @@ export default function ReportDataPanel({ report, onClose }) {
             id="damage" icon={FiAlertCircle} title="Thiệt hại"
             isOpen={isOpen('damage')} onToggle={toggle}
           >
-            {damage.cacXaHeNgap?.length === 0 ? (
-              <div className={styles.dmgBadge}>
-                <FiAlertCircle className={styles.dmgIcon} />
-                Không có ngập lụt
-              </div>
+            {(!damage.cacXaHeNgap || damage.cacXaHeNgap.length === 0) ? (
+              damage.tinhHinh ? (
+                <div style={{ fontSize: '13px', color: '#475569', lineHeight: 1.5 }}>
+                  {damage.tinhHinh}
+                </div>
+              ) : (
+                <div className={styles.dmgBadge}>
+                  <FiAlertCircle className={styles.dmgIcon} />
+                  Không có ngập lụt
+                </div>
+              )
             ) : (
               <div className={styles.dmgText}>
                 {damage.cacXaHeNgap?.length} xã/phường có số liệu ngập:{' '}

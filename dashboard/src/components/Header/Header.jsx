@@ -38,11 +38,15 @@ export default function Header({ onLogout }) {
         <div className={styles.headerDivider}></div>
         <div className={styles.headerUser}>
           <div className={styles.headerUserInfo}>
-            <div className={styles.headerUserName}>Admin</div>
-            <div className={styles.headerUserRole}>Bắc Ninh HQ</div>
+            <div className={styles.headerUserName}>
+              {localStorage.getItem('userRole') === 'admin' ? 'Lãnh đạo Sở' : (localStorage.getItem('userTitle') || 'Cán bộ')}
+            </div>
+            <div className={styles.headerUserRole}>
+               {localStorage.getItem('userRole') === 'admin' ? 'Bắc Ninh HQ' : 'Bộ phận chuyên môn'}
+            </div>
           </div>
           <div className={styles.headerAvatar} id="user-avatar">
-            👤
+            {localStorage.getItem('userRole') === 'admin' ? '👨‍💼' : '🧑‍💻'}
           </div>
           <button 
             className={styles.headerIconBtn} 

@@ -1,0 +1,407 @@
+.pageContainer {
+  padding: 24px;
+  background-color: #f1f5f9;
+  min-height: 100vh;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+
+.topHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin: 0;
+}
+
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.searchBox {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.searchIcon {
+  color: #94a3b8;
+  margin-right: 8px;
+}
+
+.searchInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  width: 150px;
+  font-size: 0.9rem;
+}
+
+.notification {
+  position: relative;
+  background: white;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  cursor: pointer;
+}
+
+.bellIcon {
+  color: #64748b;
+  font-size: 1.2rem;
+}
+
+.badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #ef4444;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  font-size: 0.65rem;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #1e293b;
+}
+
+.userRole {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* Summary Cards */
+.summaryContainer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.summaryCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+}
+
+.onTrackCard {
+  background: #f0fdf4; /* Very light green */
+}
+
+.delayedCard {
+  background: #fff7ed; /* Very light orange */
+}
+
+.completionCard {
+  background: #eff6ff; /* Very light blue */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cardHeader h2 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+  color: #1f2937;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.highlightTrack {
+  font-size: 2rem;
+  color: #10b981;
+}
+
+.highlightDelayed {
+  font-size: 2rem;
+  color: #f97316;
+}
+
+.cardDesc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+.progressContainer {
+  margin-top: 20px;
+}
+
+.progressHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  border-bottom: 2px solid;
+  padding-bottom: 4px;
+}
+
+.onTrackCard .progressHeader {
+  border-color: #10b981;
+}
+
+.delayedCard .progressHeader {
+  border-color: #f97316;
+}
+
+.progressValue {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.progressValueDelayed {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.progressText {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+/* Mini Chart */
+.miniChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  height: 40px;
+}
+
+.chartBarWrapper {
+  flex: 1;
+  position: relative;
+  height: 100%;
+}
+
+.chartBarBgTrack, .chartBarBgDelayed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.chartBarBgTrack { background: #d1fae5; }
+.chartBarBgDelayed { background: #ffedd5; }
+
+.chartBarFillTrack, .chartBarFillDelayed {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  border-radius: 4px;
+}
+
+.chartBarFillTrack { background: #10b981; }
+.chartBarFillDelayed { background: #f97316; }
+
+/* Completion Card items */
+.completionInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.completionLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #374151;
+  margin: 0 0 8px 0;
+}
+
+.completionValue {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0 0 4px 0;
+}
+
+.completionDesc {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Circular SVG */
+.circularProgress {
+  width: 100px;
+  height: 100px;
+}
+
+.circularSvg {
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.circleBg {
+  fill: none;
+  stroke: #dbeafe;
+  stroke-width: 3.8;
+}
+
+.circleFill {
+  fill: none;
+  stroke: #3b82f6;
+  stroke-width: 3.8;
+  stroke-linecap: round;
+}
+
+/* Modal form css */
+.assignTaskBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.assignTaskBtn:hover {
+  background: #1d4ed8;
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  width: 500px;
+  max-width: 90%;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.modalHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modalHeader h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #1e293b;
+}
+
+.closeBtn {
+  background: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.modalForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.inputField {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.inputField:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+}
+
+.submitModalBtn {
+  margin-top: 10px;
+  background: #10b981;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.submitModalBtn:hover {
+  background: #059669;
+}

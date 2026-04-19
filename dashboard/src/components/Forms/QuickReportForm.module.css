@@ -173,3 +173,82 @@
   cursor: not-allowed;
   box-shadow: none;
 }
+
+/* AI Upload Block */
+.aiUploadBox {
+  background: #F8FAFC;
+  border: 2px dashed #94A3B8;
+  border-radius: 12px;
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 30px;
+  transition: all 0.2s;
+}
+
+.aiUploadBox:hover {
+  background: #F0F9FF;
+  border-color: #3B82F6;
+}
+
+.aiUploadIcon {
+  font-size: 32px;
+  color: #3B82F6;
+  margin-bottom: 12px;
+}
+
+.aiUploadTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1E293B;
+  margin-bottom: 8px;
+}
+
+.aiUploadDesc {
+  font-size: 13px;
+  color: #64748B;
+  margin-bottom: 20px;
+}
+
+.btnUpload {
+  padding: 10px 20px;
+  background: #3B82F6;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s;
+}
+
+.btnUpload:hover {
+  background: #2563EB;
+}
+
+.btnUpload:disabled {
+  background: #94A3B8;
+  cursor: not-allowed;
+}
+
+.aiSuccessBanner {
+  background: #ECFDF5;
+  border: 1px solid #34D399;
+  color: #065F46;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 500;
+}
+
+.previewActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 20px;
+}

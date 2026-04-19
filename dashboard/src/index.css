@@ -131,7 +131,8 @@ input, textarea, select {
   margin-right: var(--chatpanel-width);
   height: calc(100vh - var(--header-height));
   width: calc(100vw - var(--sidebar-width) - var(--chatpanel-width));
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   background: var(--color-bg);

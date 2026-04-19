@@ -18,8 +18,18 @@ export default function LoginPage({ onLogin }) {
     // In production, this would call Firebase Auth
     if (username === 'admin' && password === 'admin@123') {
       localStorage.setItem('isAuthenticated', 'true');
-      onLogin(true); // Callback to App.jsx to update global state
-      navigate('/'); // Redirect to dashboard
+      localStorage.setItem('userRole', 'admin');
+      localStorage.setItem('userName', 'Admin');
+      localStorage.setItem('userTitle', 'Giám đốc Sở');
+      onLogin(true);
+      navigate('/');
+    } else if (username === 'user' && password === 'user@123') {
+      localStorage.setItem('isAuthenticated', 'true');
+      localStorage.setItem('userRole', 'user');
+      localStorage.setItem('userName', 'Nguyễn Văn A');
+      localStorage.setItem('userTitle', 'Trưởng phòng Quản lý đê điều');
+      onLogin(true);
+      navigate('/');
     } else {
       setError('Tên đăng nhập hoặc mật khẩu không chính xác.');
     }

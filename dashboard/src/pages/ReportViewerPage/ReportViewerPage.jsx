@@ -10,6 +10,7 @@ import ReportDataPanel from '../../components/ReportDataPanel/ReportDataPanel';
 import ReportDocument from '../../components/ReportDocument/ReportDocument';
 import { db } from '../../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
+import { getReportById } from '../../data/reportArchiveData';
 
 export default function ReportViewerPage({ onDataPanelToggle }) {
   const { reportId } = useParams();

@@ -42,14 +42,18 @@ export default function ReportDocument({ report }) {
             <div className={styles.nationMotto}>Độc lập — Tự do — Hạnh phúc</div>
             <div className={styles.nationDivider}></div>
             <div className={styles.docDate}>
-              Bắc Ninh, ngày {ngay[0]} tháng {ngay[1]} năm {ngay[2]}
+              Bắc Ninh, ngày {ngay[0] || '....'} tháng {ngay[1] || '....'} năm {ngay[2] || '....'}
             </div>
           </div>
         </div>
 
         {/* ===== TIÊU ĐỀ ===== */}
         <div className={styles.docTitleBlock}>
-          <h2 className={styles.docTitle}>{meta?.tieuDe || 'BÁO CÁO'}</h2>
+          <h2 className={styles.docTitle}>
+            {(meta?.tieuDe || 'BÁO CÁO').split('\n').map((line, i) => (
+              <div key={i}>{line}</div>
+            ))}
+          </h2>
           <p className={styles.docSubtitle}>{meta?.phuDe || ''}</p>
           {meta?.thoiDiemBaoCao && (
             <p className={styles.docTimepoint}>(Từ {meta.thoiDiemBaoCao})</p>
@@ -121,21 +125,23 @@ export default function ReportDocument({ report }) {
                                 <td className={styles.tdCenter}>{st.levels?.BD1?.toFixed(2)}</td>
                                 <td className={styles.tdCenter}>{st.levels?.BD2?.toFixed(2)}</td>
                                 <td className={styles.tdCenter}>{st.levels?.BD3?.toFixed(2)}</td>
-                                {st.readings && st.readings.length >= 2 ? (
-                                  <>
-                                    <td className={styles.tdCenter}>
-                                      <div>{st.readings[0].value.toFixed(2)}</div>
-                                      <div className={styles.compareNote}>({st.readings[0].compare})</div>
-                                    </td>
-                                    <td className={styles.tdCenter}>
-                                      <div>{st.readings[1].value.toFixed(2)}</div>
-                                      <div className={styles.compareNote}>({st.readings[1].compare})</div>
-                                    </td>
-                                  </>
-                                ) : (
-                                  <><td></td><td></td></>
-                                )}
-                                <td className={styles.tdCenter}>{st.delta?.toFixed(2)}</td>
+                                  <td className={styles.tdCenter}>
+                                    {st.readings && st.readings.length > 0 ? (
+                                      <>
+                                        <div>{st.readings[0].value.toFixed(2)}</div>
+                                        {st.readings[0].compare && <div className={styles.compareNote}>({st.readings[0].compare})</div>}
+                                      </>
+                                    ) : null}
+                                  </td>
+                                  <td className={styles.tdCenter}>
+                                    {st.readings && st.readings.length >= 2 ? (
+                                      <>
+                                        <div>{st.readings[1].value.toFixed(2)}</div>
+                                        {st.readings[1].compare && <div className={styles.compareNote}>({st.readings[1].compare})</div>}
+                                      </>
+                                    ) : null}
+                                  </td>
+                                <td className={styles.tdCenter}>{st.delta != null ? st.delta.toFixed(2) : ''}</td>
                               </tr>
                             ))
                           ))}
@@ -216,14 +222,32 @@ export default function ReportDocument({ report }) {
         )}
 
         {/* ===== MỤC TÌNH HÌNH THIỆT HẠI ===== */}
-        {damage && (
+        {damage && damage.phatSinh && (
           <div className={styles.section}>
             <h3 className={styles.sectionTitle}>{report.storm ? (infrastructure ? 'IV' : 'III') : (infrastructure ? 'III' : 'II')}. TÌNH HÌNH THIỆT HẠI</h3>
-            <p className={styles.paragraph}>{damage.phatSinh}</p>
-            <p className={styles.paragraph}>{damage.tinhHinh}</p>
-            {damage.thietHaiUocTinh && (
-              <p className={styles.paragraph}><strong>Ước tính thiệt hại:</strong> {damage.thietHaiUocTinh}</p>
-            )}
+            {damage.phatSinh.split('\n').map((line, i) => (
+              <p key={i} className={styles.paragraph}>{line}</p>
+            ))}
+          </div>
+        )}
+
+        {/* ===== MỤC CÔNG TÁC CHỈ ĐẠO ỨNG PHÓ ===== */}
+        {report.congTacUngPho && (
+          <div className={styles.section}>
+            <h3 className={styles.sectionTitle}>V. CÔNG TÁC CHỈ ĐẠO ỨNG PHÓ</h3>
+            {report.congTacUngPho.split('\n').map((line, i) => (
+              <p key={i} className={styles.paragraph}>{line}</p>
+            ))}
+          </div>
+        )}
+
+        {/* ===== MỤC ĐỀ NGHỊ ===== */}
+        {report.kienNghi && (
+          <div className={styles.section}>
+            <h3 className={styles.sectionTitle}>VI. ĐỀ NGHỊ</h3>
+            {report.kienNghi.split('\n').map((line, i) => (
+              <p key={i} className={styles.paragraph}>{line}</p>
+            ))}
           </div>
         )}
 
@@ -242,10 +266,11 @@ export default function ReportDocument({ report }) {
           </div>
           <div className={styles.footerRight}>
             <div className={styles.footerPosition}>
-              {meta?.chucVu === 'GIÁM ĐỐC' ? 'GIÁM ĐỐC' : `KT. TRƯỞNG BAN`}
+              {meta?.chucVu?.split('\n').map((line, i) => (
+                <div key={i}>{line}</div>
+              ))}
             </div>
-            <div className={styles.footerSubPosition}>{meta?.chucVu}</div>
-            <div className={styles.footerSignature}>(Đã ký)</div>
+            <div className={styles.footerSignature} style={{marginTop: '40px'}}>(Đã ký)</div>
             <div className={styles.footerName}>{meta?.nguoiKy}</div>
           </div>
         </div>

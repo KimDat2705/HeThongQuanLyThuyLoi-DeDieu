@@ -185,9 +185,7 @@ export default function ReportArchivePage() {
 
           {/* Report Grid */}
           <div className={styles.reportGrid}>
-            {filtered.map((report) => {
-              const priority = getPriorityStyle(report.mucDoUuTien);
-              return (
+            {filtered.map((report) => (
                 <div
                   className={styles.reportCard}
                   key={report.id}
@@ -197,57 +195,34 @@ export default function ReportArchivePage() {
                 >
                   {/* Card Header */}
                   <div className={styles.cardHeader}>
-                    <span className={styles.cardTypeIcon}>
-                      {getTypeIcon(report.loaiBaoCao)}
-                    </span>
                     <div className={styles.cardHeaderInfo}>
-                      <span className={styles.cardType}>{report.loaiBaoCao}</span>
-                      <span
-                        className={styles.cardPriority}
-                        style={{ color: priority.color, background: priority.bg }}
-                      >
-                        {priority.icon} {report.mucDoUuTien}
+                      <span style={{display: 'flex', alignItems: 'center', fontSize: '13px', fontWeight: 600, color: '#334155', textTransform: 'uppercase'}}>
+                        <FiFileText size={16} style={{ marginRight: '8px', color: '#64748B' }} />
+                        {report.loaiBaoCao}
                       </span>
                     </div>
                   </div>
 
                   {/* Card Body */}
-                  <h3 className={styles.cardTitle}>{report.phuDe}</h3>
+                  <h3 className={styles.cardTitle}>{report.tieuDe?.replace(/BÁO CÁO NHANH\n?/i, '') || 'Báo cáo khẩn cấp về thiên tai trên địa bàn'}</h3>
 
-                  <div className={styles.cardMeta}>
+                  <div className={styles.cardMeta} style={{ marginTop: '8px' }}>
                     <div className={styles.metaItem}>
-                      <FiCalendar />
-                      <span>{report.ngay}</span>
-                    </div>
-                    <div className={styles.metaItem}>
-                      <FiMapPin />
-                      <span>{report.capHanhChinh}</span>
+                      <FiCalendar style={{color: '#64748B'}} />
+                      <span style={{color: '#475569'}}>{report.ngay}</span>
                     </div>
                   </div>
 
-                  <div className={styles.cardOrg}>
-                    {report.coQuan}
-                  </div>
 
-                  {/* Tags */}
-                  <div className={styles.cardTags}>
-                    {report.tags && report.tags.map((tag, i) => (
-                      <span className={styles.tag} key={i}>{tag}</span>
-                    ))}
-                  </div>
 
                   {/* Card Footer */}
-                  <div className={styles.cardFooter}>
-                    <span className={styles.cardStatus}>
-                      ✅ {report.trangThai}
-                    </span>
-                    <span className={styles.cardAction}>
-                      Xem chi tiết <FiChevronRight />
+                  <div className={styles.cardFooter} style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                    <span className={styles.cardAction} style={{ color: '#2563eb', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+                      Xem chi tiết <FiChevronRight style={{marginLeft: '4px'}} />
                     </span>
                   </div>
                 </div>
-              );
-            })}
+            ))}
           </div>
 
           {/* Empty state */}

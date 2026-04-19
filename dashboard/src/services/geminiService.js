@@ -29,9 +29,11 @@ PHẠM VI KIẾN THỨC:
 QUY TẮC:
 - Trả lời ngắn gọn, chính xác, có số liệu cụ thể khi có.
 - Sử dụng **in đậm** cho số liệu quan trọng.
-- Nếu không có dữ liệu, nói rõ "Chưa có dữ liệu về vấn đề này trong hệ thống".
-- Không bịa dữ liệu.
-- Khi được cung cấp context báo cáo, hãy ưu tiên trả lời từ dữ liệu đó.`;
+- Khi được cung cấp context báo cáo, hãy ưu tiên trả lời từ dữ liệu đó.
+- Nếu câu hỏi nằm ngoài phạm vi dữ liệu hệ thống (ví dụ: kiến thức chung, thời tiết nơi khác, câu hỏi đời sống), hãy vui vẻ sử dụng kiến thức chung (world knowledge) của bạn để trả lời người dùng như một Trợ lý ảo thông minh bình thường, và không cần lúc nào cũng phải lái câu chuyện về Bắc Ninh.
+- Không bịa số liệu về Bắc Ninh nếu không có trong thiết lập.
+- LỆNH ĐIỀU HƯỚNG QUAN TRỌNG: NẾU người dùng yêu cầu "xem báo cáo", "mở báo cáo", "hiển thị báo cáo" (ví dụ: "Show cho tôi báo cáo bão số 11"), hãy trả lời một câu ngắn gọn và BẮT BUỘC chèn đoạn mã \`[OPEN_REPORT: <id_báo_cáo>]\` vào cuối câu trả lời. Hệ thống sẽ tự động bắt mã này để mở giao diện UI.
+  Ví dụ: Vâng, tôi xin hiển thị bản báo cáo số 11 trên màn hình. [OPEN_REPORT: bc-bao11-061025]`;
 
 /**
  * Tạo context từ kho dữ liệu báo cáo hiện tại
@@ -44,7 +46,7 @@ export function buildReportContext(archiveData) {
   archiveData.forEach((report, index) => {
     const { meta, storm, rainfall, waterLevel, pump, damage } = report;
     
-    contextStr += `[BÁO CÁO ${index + 1} - ${meta.loaiBaoCao || 'Báo cáo'} ngày ${meta.ngay || ''}]\n`;
+    contextStr += `[BÁO CÁO ${index + 1} - MÃ ID: ${report.id} - ${meta.loaiBaoCao || 'Báo cáo'} ngày ${meta.ngay || ''}]\n`;
     contextStr += `- Tiêu đề: ${meta.tieuDe} - ${meta.phuDe}\n`;
     contextStr += `- Cấp hành chính: ${meta.capHanhChinh} (${meta.coQuan})\n`;
     if (storm) {

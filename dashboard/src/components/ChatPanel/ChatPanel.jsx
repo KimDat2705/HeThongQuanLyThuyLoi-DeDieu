@@ -5,13 +5,12 @@
    ============================================ */
 import { useState, useRef, useEffect, useCallback } from 'react';
 import styles from './ChatPanel.module.css';
-import { FiPaperclip, FiSend, FiMapPin, FiTrendingUp, FiFileText } from 'react-icons/fi';
+import { FiPaperclip, FiSend, FiMapPin, FiTrendingUp, FiFileText, FiExternalLink } from 'react-icons/fi';
 import { BsRobot } from 'react-icons/bs';
+import { useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../config/firebase';
 import { sendMessage, buildReportContext } from '../../services/geminiService';
-import { reportArchive } from '../../data/reportArchiveData';
-
-/* Nạp TOÀN BỘ dữ liệu hệ thống vào context cho AI */
-const systemContext = buildReportContext(reportArchive);
 
 /* Gợi ý mẫu */
 const SUGGESTIONS = [
@@ -39,6 +38,7 @@ export default function ChatPanel() {
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
+  const navigate = useNavigate();
 
   /* Auto scroll */
   useEffect(() => {
@@ -67,14 +67,30 @@ export default function ChatPanel() {
     setIsLoading(true);
 
     try {
+      /* Truyền TOÀN BỘ context hệ thống TRỰC TIẾP TỪ FIREBASE */
+      const snapshot = await getDocs(collection(db, 'reports'));
+      const activeReports = [];
+      snapshot.forEach(doc => {
+        activeReports.push({ id: doc.id, ...doc.data() });
+      });
+      const dynamicSystemContext = buildReportContext(activeReports);
+
       const allMessages = [...messages, userMsg];
       const history = toGeminiHistory(allMessages);
-      /* Truyền TOÀN BỘ context hệ thống */
-      const aiResponse = await sendMessage(history, systemContext);
+      const aiResponse = await sendMessage(history, dynamicSystemContext);
       const aiTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
 
+      let finalAiResponse = aiResponse;
+      const match = finalAiResponse.match(/\[OPEN_REPORT:\s*(.*?)\]/);
+      if (match) {
+         const id = match[1].trim();
+         // Strip from the response so no future matches can occur if we restore it
+         finalAiResponse = finalAiResponse.replace(/\[OPEN_REPORT:\s*(.*?)\]/g, '');
+         navigate('/bao-cao/' + id);
+      }
+
       setMessages(prev => [...prev, {
-        role: 'ai', text: aiResponse, time: aiTime,
+        role: 'ai', text: finalAiResponse, time: aiTime,
       }]);
     } catch (error) {
       console.error('Gemini error:', error);
@@ -126,11 +142,13 @@ export default function ChatPanel() {
               </div>
               <div>
                 <div className={styles.messageAIBubble}>
-                  {msg.text.split('\n\n').map((para, pi) => (
-                    <p key={pi} dangerouslySetInnerHTML={{
-                      __html: renderMarkdown(para)
+                  {msg.text.split('\n').map((para, pi) => {
+                    let text = para.replace(/\[OPEN_REPORT:\s*(.*?)\]/g, '');
+                    if (!text.trim()) return null;
+                    return <p key={pi} dangerouslySetInnerHTML={{
+                      __html: renderMarkdown(text)
                     }} />
-                  ))}
+                  })}
                 </div>
                 <div className={styles.messageTimeLeft}>{msg.time}</div>
               </div>

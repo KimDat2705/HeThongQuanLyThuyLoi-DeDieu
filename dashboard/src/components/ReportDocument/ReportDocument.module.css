@@ -36,23 +36,25 @@
 
 .docHeaderLeft {
   text-align: center;
-  flex: 0 0 42%;
+  flex: 1;
 }
 
 .docHeaderRight {
   text-align: center;
-  flex: 0 0 50%;
+  flex: 1.1;
 }
 
 .orgNameSub {
   font-size: 12px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .orgName {
   font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .orgDivider {
@@ -70,6 +72,7 @@
   font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .nationMotto {
@@ -97,11 +100,22 @@
 }
 
 .docTitle {
-  font-size: 18px;
   font-weight: 700;
-  text-transform: uppercase;
   margin-bottom: 8px;
   color: #1a1a1a;
+  line-height: 1.4;
+  padding: 0 10px;
+}
+
+.docTitle div:first-child {
+  font-size: 16px;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.docTitle div:not(:first-child) {
+  font-size: 14px;
+  text-transform: none;
 }
 
 .docSubtitle {
@@ -277,13 +291,6 @@
   font-weight: 700;
   font-size: 13px;
   text-transform: uppercase;
-}
-
-.footerSubPosition {
-  font-weight: 700;
-  font-size: 13px;
-  text-transform: uppercase;
-  margin-bottom: 40px;
 }
 
 .footerSignature {

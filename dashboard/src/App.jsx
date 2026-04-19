@@ -5,18 +5,19 @@ import { Routes, Route, Navigate, useNavigate, useLocation } from 'react-router-
 import Header from './components/Header/Header';
 import Sidebar from './components/Sidebar/Sidebar';
 import ChatPanel from './components/ChatPanel/ChatPanel';
-
 import DashboardPage from './pages/DashboardPage/DashboardPage';
 import ReportArchivePage from './pages/ReportArchivePage/ReportArchivePage';
 import ReportViewerPage from './pages/ReportViewerPage/ReportViewerPage';
 import DataEntryPage from './pages/DataEntryPage/DataEntryPage';
 import LoginPage from './pages/LoginPage/LoginPage';
+import TaskManagementPage from './pages/TaskManagementPage/TaskManagementPage';
+import UserTaskPage from './pages/UserTaskPage/UserTaskPage';
 
 function App() {
-  /* Kiểm tra trạng thái đăng nhập */
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
+  const userRole = localStorage.getItem('userRole');
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -33,6 +34,9 @@ function App() {
 
   const handleLogout = () => {
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('userRole');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userTitle');
     setIsAuthenticated(false);
   };
 
@@ -46,13 +50,14 @@ function App() {
       ) : (
         <>
           <Header onLogout={handleLogout} />
-          <Sidebar hidden={sidebarHidden} onLogout={handleLogout} />
+          <Sidebar hidden={sidebarHidden} onLogout={handleLogout} userRole={userRole} />
 
           <main className={`main-content-wrapper ${sidebarHidden ? 'sidebar-hidden' : ''}`}>
             <Routes>
               <Route path="/" element={<DashboardPage />} />
               <Route path="/bao-cao" element={<ReportArchivePage />} />
               <Route path="/nhap-lieu" element={<DataEntryPage />} />
+              <Route path="/cong-viec/*" element={userRole === 'user' ? <UserTaskPage /> : <TaskManagementPage />} />
               <Route
                 path="/bao-cao/:reportId"
                 element={
@@ -66,7 +71,7 @@ function App() {
             </Routes>
           </main>
 
-          {/* ChatPanel toàn cục — hiển thị trên MỌI trang */}
+          {/* ChatPanel toàn cục */}
           <ChatPanel />
         </>
       )}

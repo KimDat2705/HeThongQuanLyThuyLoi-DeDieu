@@ -1,9 +1,11 @@
 import styles from './Sidebar.module.css';
 import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
 import { GiWheat } from 'react-icons/gi';
 import {
   FiGrid, FiCloud, FiDroplet, FiFileText,
-  FiMapPin, FiShield, FiBarChart2, FiSettings, FiEdit
+  FiMapPin, FiShield, FiBarChart2, FiSettings, FiEdit, FiCheckSquare,
+  FiChevronDown, FiChevronRight
 } from 'react-icons/fi';
 
 const navItems = [
@@ -11,6 +13,8 @@ const navItems = [
     section: null,
     items: [
       { icon: <FiGrid />, label: 'Tổng quan', path: '/' },
+      { icon: <FiCheckSquare />, label: 'Công việc', path: '/cong-viec' },
+      { icon: <FiEdit />, label: 'Nhập liệu', path: '/nhap-lieu' },
     ]
   },
   {
@@ -19,7 +23,6 @@ const navItems = [
       { icon: <FiCloud />, label: 'Dự báo thời tiết' },
       { icon: <FiDroplet />, label: 'Tình hình ngập lụt' },
       { icon: <FiFileText />, label: 'Thiệt hại & Báo cáo', path: '/bao-cao' },
-      { icon: <FiEdit />, label: 'Nhập liệu', path: '/nhap-lieu' },
     ]
   },
   {
@@ -32,22 +35,77 @@ const navItems = [
   }
 ];
 
-export default function Sidebar({ hidden = false }) {
+export default function Sidebar({ hidden = false, userRole }) {
+  const [expandedKeys, setExpandedKeys] = useState({});
+  const toggleExpand = (key) => setExpandedKeys(p => ({ ...p, [key]: !p[key] }));
+
+  const dynamicNavItems = navItems.map((group, index) => {
+    if (index === 0) {
+      return {
+        ...group,
+        items: [
+          { icon: <FiGrid />, label: 'Tổng quan', path: '/' },
+          { 
+             icon: <FiCheckSquare />, 
+             label: 'Công việc', 
+             subItems: [
+               { label: 'Đang thực hiện', path: '/cong-viec/dang-thuc-hien' },
+               { label: 'Đã hoàn thiện', path: '/cong-viec/da-hoan-thanh' },
+             ]
+          },
+          { icon: <FiEdit />, label: 'Nhập liệu', path: '/nhap-lieu' },
+        ]
+      }
+    }
+    return group;
+  });
+
   return (
     <aside
       className={`${styles.sidebar} ${hidden ? styles.sidebarHidden : ''}`}
       id="main-sidebar"
     >
       {/* Navigation */}
-      {navItems.map((group, gi) => (
-        <nav className={styles.navSection} key={gi}>
-          {group.section && (
-            <div className={styles.navLabel}>{group.section}</div>
-          )}
-          {group.items.map((item, ii) => {
+      {dynamicNavItems.map((group, gi) => {
+        const filteredItems = group.items.filter(item => {
+          if (userRole === 'admin') return true;
+          return !!item.path || !!item.subItems; // Users only see functional pages or submenus
+        });
+
+        if (filteredItems.length === 0) return null;
+
+        return (
+          <nav className={styles.navSection} key={gi}>
+            {group.section && (
+              <div className={styles.navLabel}>{group.section}</div>
+            )}
+            {filteredItems.map((item, ii) => {
             const id = `nav-${item.label.toLowerCase().replace(/\s+/g, '-')}`;
 
-            if (item.path) {
+              if (item.subItems) {
+                const isExpanded = expandedKeys[item.label];
+                return (
+                  <div key={ii} className={styles.navItemWrapper}>
+                    <div className={`${styles.navItem} ${isExpanded ? styles.activeGroup : ''}`} onClick={() => toggleExpand(item.label)}>
+                        <span className={styles.navIcon}>{item.icon}</span>
+                        <span className={styles.navText}>{item.label}</span>
+                        <span className={styles.navChevron}>{isExpanded ? <FiChevronDown/> : <FiChevronRight/>}</span>
+                    </div>
+                     {isExpanded && (
+                       <div className={styles.navSubMenu}>
+                         {item.subItems.map((sub, si) => (
+                            <NavLink to={sub.path} className={({ isActive }) => `${styles.navSubItem} ${isActive ? styles.active : ''}`} key={si}>
+                               {sub.icon && <span className={styles.navIcon} style={{ fontSize: '14px' }}>{sub.icon}</span>}
+                               <span className={styles.navText}>{sub.label}</span>
+                            </NavLink>
+                         ))}
+                       </div>
+                     )}
+                  </div>
+                );
+              }
+
+              if (item.path) {
               return (
                 <NavLink
                   to={item.path}
@@ -75,8 +133,9 @@ export default function Sidebar({ hidden = false }) {
               </div>
             );
           })}
-        </nav>
-      ))}
+          </nav>
+        );
+      })}
 
       {/* Settings */}
       <div className={styles.sidebarBottom}>
