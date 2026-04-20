@@ -50,7 +50,7 @@ export default function LoginPage({ onLogin }) {
 
         <div className={styles.formHeader}>
           <h2 className={styles.formTitle}>
-            HỆ THỐNG QUẢN LÝ THỦY LỢI VÀ<br />
+            QUẢN LÝ HỆ THỐNG THỦY LỢI VÀ<br />
             PHÒNG, CHỐNG THIÊN TAI
           </h2>
           <p className={styles.formSubtitle}>

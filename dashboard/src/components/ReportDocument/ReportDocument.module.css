@@ -25,6 +25,7 @@
   line-height: 1.7;
   color: #1a1a1a;
   height: fit-content;
+  position: relative;
 }
 
 /* ===== HEADER ===== */

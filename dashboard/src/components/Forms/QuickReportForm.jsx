@@ -5,6 +5,7 @@ import { submitQuickReport } from '../../services/reportService';
 import { useNavigate } from 'react-router-dom';
 import ReportDocument from '../ReportDocument/ReportDocument';
 import { parseWaterLevel, parseReservoir, parsePump, parseDeDieu, parseThuyLoi, parseDaMageArea } from '../../utils/dataExtractor';
+import { scanFakeReportAI } from '../../utils/reportChecker';
 
 export default function QuickReportForm({ metaData = {} }) {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ export default function QuickReportForm({ metaData = {} }) {
   const [isExtracting, setIsExtracting] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [isPreviewMode, setIsPreviewMode] = useState(false);
+  const [fakeWarning, setFakeWarning] = useState(null);
 
   const [formData, setFormData] = useState({
     soHieu: '',
@@ -159,6 +161,14 @@ export default function QuickReportForm({ metaData = {} }) {
     try {
       const formattedReport = generateReportData();
       formattedReport.meta.trangThai = 'Đã duyệt'; // Simulate final submission status
+      if (fakeWarning) {
+        formattedReport.meta.isFakeReport = true;
+        formattedReport.meta.fakeScore = fakeWarning.percent;
+        if (!formattedReport.meta.tags) {
+           formattedReport.meta.tags = [];
+        }
+        formattedReport.meta.tags.push('CẢNH BÁO: XÀO NẤU SỐ LIỆU');
+      }
 
       await submitQuickReport(formattedReport);
       alert('Tải dữ liệu lên hệ thống thành công! Giao diện sẽ chuyển về Kho Báo cáo ngay bây giờ.');
@@ -177,6 +187,22 @@ export default function QuickReportForm({ metaData = {} }) {
           <FiCheckCircle size={20} color="#2563EB" />
           <span style={{ fontWeight: 500 }}>Vui lòng kiểm tra kỹ lại thông tin trên bản Báo cáo hoàn chỉnh trước khi gửi lên Hệ thống hoặc Lãnh đạo cấp cao.</span>
         </div>
+
+        {fakeWarning && (
+          <div style={{ background: '#FEF2F2', color: '#991B1B', padding: '16px', borderRadius: '8px', marginBottom: '15px', border: '1px solid #FCA5A5', position: 'relative', overflow: 'hidden', animation: 'fadeIn 0.5s ease-out' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, width: '4px', height: '100%', background: '#DC2626' }}></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+               <FiAlertCircle size={20} color="#DC2626" />
+               <strong style={{ fontSize: '15px' }}>🚨 CẢNH BÁO AI: RÀ SOÁT TÍNH TRUNG THỰC</strong>
+            </div>
+            <p style={{ margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
+               Trợ lý AI phát hiện Dữ liệu Báo cáo bạn vừa nộp có độ trùng lặp <strong>{fakeWarning.percent}%</strong> với kho dữ liệu năm trước <strong>({fakeWarning.matchedTitle})</strong>. 
+            </p>
+            <p style={{ margin: '8px 0 0 0', fontSize: '13px', color: '#B91C1C' }}>
+               <em>*Bạn vẫn có thể tiếp tục nộp, nhưng Hồ sơ này sẽ bị đóng dấu Đỏ cấp cao "Nghi vấn Xào nấu Số liệu" để trình lên thẳng Lãnh đạo Sở Giám sát & Xử lý kỷ luật nếu cố tình vi phạm!</em>
+            </p>
+          </div>
+        )}
         
         {/* Render the full report layout */}
         <div style={{ background: '#fff', borderRadius: '10px', border: '1px solid #E2E8F0', padding: '20px', maxHeight: '600px', overflowY: 'auto' }}>
@@ -391,7 +417,12 @@ export default function QuickReportForm({ metaData = {} }) {
         <button className={styles.btnCancel} onClick={() => navigate('/bao-cao')}>Hủy bỏ</button>
         <button 
           className={styles.btnSubmit} 
-          onClick={() => setIsPreviewMode(true)}
+          onClick={async () => {
+             const reportPayload = generateReportData();
+             const aiWarn = await scanFakeReportAI(reportPayload);
+             setFakeWarning(aiWarn.isFake ? aiWarn : null);
+             setIsPreviewMode(true);
+          }}
           style={{ background: '#3B82F6', border: 'none' }}
         >
           Duyệt

@@ -10,8 +10,9 @@ import { collection, getDocs, query, orderBy } from 'firebase/firestore';
 import {
   FiSearch, FiFilter, FiFileText, FiCalendar,
   FiChevronRight, FiAlertTriangle, FiCloudRain,
-  FiWind, FiShield, FiMapPin, FiLoader
+  FiWind, FiShield, FiMapPin, FiLoader, FiDownload
 } from 'react-icons/fi';
+import { exportReportToWord } from '../../utils/exportReportToWord';
 
 /* Icon theo mức độ ưu tiên */
 function getPriorityStyle(priority) {
@@ -63,6 +64,7 @@ export default function ReportArchivePage() {
             tags: r.meta?.tags || ['Mới nhập'],
             stormName: r.storm?.ten || null,
             rainfallAvg: r.rainfall?.trungBinh || 0,
+            originalData: r
           };
         });
         
@@ -109,6 +111,11 @@ export default function ReportArchivePage() {
 
   const handleOpenReport = (id) => {
     navigate(`/bao-cao/${id}`);
+  };
+
+  const handleExportDoc = (e, report) => {
+    e.stopPropagation();
+    exportReportToWord({ id: report.id, ...report.originalData });
   };
 
   return (
@@ -206,17 +213,35 @@ export default function ReportArchivePage() {
                   {/* Card Body */}
                   <h3 className={styles.cardTitle}>{report.tieuDe?.replace(/BÁO CÁO NHANH\n?/i, '') || 'Báo cáo khẩn cấp về thiên tai trên địa bàn'}</h3>
 
-                  <div className={styles.cardMeta} style={{ marginTop: '8px' }}>
+                  <div className={styles.cardMeta} style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
                     <div className={styles.metaItem}>
                       <FiCalendar style={{color: '#64748B'}} />
                       <span style={{color: '#475569'}}>{report.ngay}</span>
                     </div>
+                    {report.originalData?.meta?.isFakeReport && (
+                      <div style={{color: '#DC2626', fontSize: '13px', fontWeight: 700, display: 'flex', alignItems: 'center', background: '#FEF2F2', padding: '4px 10px', borderRadius: '4px', width: 'fit-content', border: '1px solid #FCA5A5'}}>
+                        <FiAlertTriangle style={{marginRight: '6px'}} /> 
+                        Báo cáo nghi vấn sao chép dữ liệu
+                      </div>
+                    )}
                   </div>
 
 
 
                   {/* Card Footer */}
-                  <div className={styles.cardFooter} style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                  <div className={styles.cardFooter} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '16px' }}>
+                    <button
+                      className={styles.exportBtn}
+                      style={{ 
+                        color: '#475569', display: 'flex', alignItems: 'center', gap: '6px', 
+                        padding: '6px 12px', border: '1px solid #CBD5E1', borderRadius: '6px',
+                        backgroundColor: '#F8FAFC', cursor: 'pointer', fontSize: '13px', fontWeight: 600
+                      }}
+                      onClick={(e) => handleExportDoc(e, report)}
+                      title="Xuất file báo cáo ra Word"
+                    >
+                      <FiDownload /> Xuất file
+                    </button>
                     <span className={styles.cardAction} style={{ color: '#2563eb', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
                       Xem chi tiết <FiChevronRight style={{marginLeft: '4px'}} />
                     </span>

@@ -1,0 +1,141 @@
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--text-primary, #333);
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-color, #1A56DB);
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  color: var(--text-secondary, #6B7280);
+  font-size: 1rem;
+}
+
+.rainfallContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.rainSummary {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.summaryBox {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color, #E5E7EB);
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.summaryLabel {
+  color: var(--text-secondary, #6B7280);
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.summaryValue {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-color, #1A56DB);
+}
+
+.unit {
+  font-size: 1rem;
+  color: var(--text-secondary, #6B7280);
+}
+
+.stationsList {
+  background: white;
+  border-radius: 1rem;
+  border: 1px solid var(--border-color, #E5E7EB);
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+}
+
+.listTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary, #111827);
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}
+
+.stationsTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.stationsTable th {
+  padding: 1rem;
+  background-color: var(--bg-hover, #F9FAFB);
+  color: var(--text-secondary, #6B7280);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border-color, #E5E7EB);
+}
+
+.stationsTable td {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-color, #E5E7EB);
+  color: var(--text-primary, #374151);
+  font-weight: 500;
+}
+
+.stationName {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.pinIcon {
+  color: var(--primary-color, #1A56DB);
+}
+
+.timeTag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background-color: var(--bg-hover, #F3F4F6);
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6B7280);
+}
+
+.highRain {
+  color: #E53935 !important;
+  font-weight: 700 !important;
+}
+
+.statusBadge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: inline-block;
+}
+
+@media (max-width: 768px) {
+  .rainSummary {
+    grid-template-columns: 1fr;
+  }
+}
