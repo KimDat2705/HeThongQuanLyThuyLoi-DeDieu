@@ -7,7 +7,7 @@ import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
  */
 export const submitQuickReport = async (formData) => {
   try {
-    const docRef = await addDoc(collection(db, 'reports'), {
+    const docRef = await addDoc(collection(db, 'reports_v2'), {
       ...formData,
       type: 'BaoCaoNhanh',
       status: 'Chờ duyệt',

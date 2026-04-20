@@ -14,7 +14,7 @@ export async function scanFakeReportAI(currentReport) {
   let combinedArchive = [...reportArchive];
 
   try {
-     const snapshot = await getDocs(collection(db, 'reports'));
+     const snapshot = await getDocs(collection(db, 'reports_v2'));
      snapshot.forEach(doc => {
        combinedArchive.push({ id: doc.id, ...doc.data() });
      });

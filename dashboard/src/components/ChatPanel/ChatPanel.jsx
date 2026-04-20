@@ -68,7 +68,7 @@ export default function ChatPanel() {
 
     try {
       /* Truyền TOÀN BỘ context hệ thống TRỰC TIẾP TỪ FIREBASE */
-      const snapshot = await getDocs(collection(db, 'reports'));
+      const snapshot = await getDocs(collection(db, 'reports_v2'));
       const activeReports = [];
       snapshot.forEach(doc => {
         activeReports.push({ id: doc.id, ...doc.data() });

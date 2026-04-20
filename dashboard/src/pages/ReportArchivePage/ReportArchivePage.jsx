@@ -47,7 +47,7 @@ export default function ReportArchivePage() {
     const fetchFirebaseReports = async () => {
       setIsLoading(true);
       try {
-        const q = query(collection(db, 'reports'), orderBy('createdAt', 'desc'));
+        const q = query(collection(db, 'reports_v2'), orderBy('createdAt', 'desc'));
         const snapshot = await getDocs(q);
         const fbDocs = snapshot.docs.map(doc => {
           const r = doc.data();
