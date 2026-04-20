@@ -3,14 +3,22 @@ import { useLocation } from 'react-router-dom';
 import { FiSearch, FiBell, FiPlus, FiX } from 'react-icons/fi';
 import styles from './TaskManagementPage.module.css';
 import GanttChart from '../../components/GanttChart/GanttChart';
-import { getProjects, saveProjects, summaryData, GLOBAL_CHART_START, GLOBAL_CHART_END } from '../../data/mockTaskData';
+import { summaryData, GLOBAL_CHART_START, GLOBAL_CHART_END } from '../../data/mockTaskData';
+import { subscribeToProjects, saveProjectsToCloud } from '../../services/taskService';
 import { diffDays } from '../../utils/dateUtils';
 
 export default function TaskManagementPage() {
   const location = useLocation();
   const isCompletedTab = location.pathname.includes('da-hoan-thanh');
 
-  const [projects, setProjects] = useState(getProjects());
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    const unsubscribe = subscribeToProjects((liveData) => {
+      setProjects(liveData);
+    });
+    return () => unsubscribe();
+  }, []);
   const [showModal, setShowModal] = useState(false);
   const [isCustomProject, setIsCustomProject] = useState(false);
   const [selectedProjectIdForModal, setSelectedProjectIdForModal] = useState(null);
@@ -43,7 +51,7 @@ export default function TaskManagementPage() {
       return p;
     });
     setProjects(newProjects);
-    saveProjects(newProjects);
+    saveProjectsToCloud(newProjects);
     closeReviewModal();
   };
 
@@ -60,7 +68,7 @@ export default function TaskManagementPage() {
       return p;
     });
     setProjects(newProjects);
-    saveProjects(newProjects);
+    saveProjectsToCloud(newProjects);
     closeReviewModal();
   };
 
@@ -108,7 +116,7 @@ export default function TaskManagementPage() {
     }
 
     setProjects(newProjects);
-    saveProjects(newProjects);
+    saveProjectsToCloud(newProjects);
     setShowModal(false);
     setIsCustomProject(false); // reset
   };

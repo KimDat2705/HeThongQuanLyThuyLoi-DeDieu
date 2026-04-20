@@ -153,7 +153,7 @@ export default function GanttChart({ projects, onOpenAddModal, onOpenReviewModal
                         className={`${styles.taskBarContainer} ${isWaiting ? styles.waiting : isRejected ? styles.rejected : task.isDelayed ? styles.delayed : styles.onTrack}`}
                         style={{ 
                           left: `${diffDays(actualStartDate, task.startDate) * pixelsPerDay}px`, 
-                          width: `${diffDays(task.startDate, task.endDate) * pixelsPerDay}px` 
+                          width: `${(diffDays(task.startDate, task.endDate) + 1) * pixelsPerDay}px` 
                         }}
                       >
                         <div 

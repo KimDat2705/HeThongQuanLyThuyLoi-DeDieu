@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { FiCheckCircle, FiClock, FiCheckSquare, FiAlertCircle, FiEdit2 } from 'react-icons/fi';
 import styles from './UserTaskPage.module.css';
-import { getProjects, saveProjects } from '../../data/mockTaskData';
 import ChatPanel from '../../components/ChatPanel/ChatPanel';
+import { subscribeToProjects, saveProjectsToCloud } from '../../services/taskService';
 
 export default function UserTaskPage() {
   const [tasks, setTasks] = useState([]);
@@ -12,22 +12,23 @@ export default function UserTaskPage() {
   const location = useLocation();
   const isCompletedTab = location.pathname.includes('da-hoan-thanh');
   
-  useEffect(() => {
-    loadMyTasks();
-  }, []);
+  const [allProjects, setAllProjects] = useState([]);
 
-  const loadMyTasks = () => {
-    const allProjects = getProjects();
-    const myTasks = [];
-    allProjects.forEach(project => {
-      project.tasks.forEach(task => {
-        if (task.assignee === userTitle) {
-          myTasks.push({ ...task, projectName: project.name, projectId: project.id });
-        }
+  useEffect(() => {
+    const unsubscribe = subscribeToProjects((liveData) => {
+      setAllProjects(liveData);
+      const myTasks = [];
+      liveData.forEach(project => {
+        project.tasks.forEach(task => {
+          if (task.assignee === userTitle) {
+            myTasks.push({ ...task, projectName: project.name, projectId: project.id });
+          }
+        });
       });
+      setTasks(myTasks);
     });
-    setTasks(myTasks);
-  };
+    return () => unsubscribe();
+  }, [userTitle]);
 
   const openUpdateModal = (task) => {
     setUpdateModal({
@@ -44,7 +45,6 @@ export default function UserTaskPage() {
 
   const handleUpdateSubmit = () => {
     const { task, newProgress, newNote } = updateModal;
-    const allProjects = getProjects();
     
     // Determine status logic
     let newStatus = task.status;
@@ -77,8 +77,7 @@ export default function UserTaskPage() {
       return p;
     });
 
-    saveProjects(updatedProjects);
-    loadMyTasks();
+    saveProjectsToCloud(updatedProjects);
     closeUpdateModal();
   };
 
