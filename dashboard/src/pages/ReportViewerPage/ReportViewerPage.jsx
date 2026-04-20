@@ -25,7 +25,7 @@ export default function ReportViewerPage({ onDataPanelToggle }) {
     const fetchReport = async () => {
       setLoading(true);
       try {
-        const docRef = doc(db, 'reports', reportId);
+        const docRef = doc(db, 'reports_v2', reportId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           setReport({ id: docSnap.id, ...docSnap.data() });

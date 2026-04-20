@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styles from './Header.module.css';
 import { FiSearch, FiBell, FiHelpCircle, FiLogOut, FiShield, FiDroplet, FiAlertCircle } from 'react-icons/fi';
+import { subscribeToProjects } from '../../services/taskService';
 
 export default function Header({ onLogout }) {
   const [showNotifications, setShowNotifications] = useState(false);
@@ -10,23 +11,21 @@ export default function Header({ onLogout }) {
   const userRole = localStorage.getItem('userRole');
   const userTitle = localStorage.getItem('userTitle');
 
-  // Real-time polling cho Notification
+  // Real-time Firebase polling cho Notification
   useEffect(() => {
-    const calculateLateTasks = () => {
-      const saved = localStorage.getItem('demoProjectsWorkflowV4');
-      if (!saved) return;
-      
+    const unsubscribe = subscribeToProjects((projects) => {
       try {
-        const projects = JSON.parse(saved);
         let lateList = [];
         const today = new Date();
         today.setHours(0, 0, 0, 0);
 
         projects.forEach(project => {
           project.tasks.forEach(task => {
-            if (task.progress < 100 && task.status !== 'Đã hoàn thành') {
+            if (task.progress < 100 && task.status !== 'Đã hoàn thành' && task.status !== 'Chờ nghiệm thu') {
               const taskEndDate = new Date(task.endDate);
-              // Nếu trễ hạn (hạn chót nhỏ hơn hôm nay) hoặc có cờ isDelayed
+              taskEndDate.setHours(0, 0, 0, 0);
+              
+              // Cờ isDelayed có thể được set từ taskService, hoặc tự tính ở đây
               if (taskEndDate < today || task.isDelayed) {
                 lateList.push({
                   id: task.id,
@@ -43,11 +42,9 @@ export default function Header({ onLogout }) {
       } catch (e) {
          console.error('Error parsing tasks for notifications', e);
       }
-    };
+    });
 
-    calculateLateTasks(); // Chạy ngay khi mount
-    const interval = setInterval(calculateLateTasks, 10000); // Polling mỗi 10s
-    return () => clearInterval(interval);
+    return () => unsubscribe();
   }, []);
 
   // Đóng dropdown khi click ra ngoài

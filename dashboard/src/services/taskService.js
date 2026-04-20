@@ -10,7 +10,30 @@ const DOC_REF = doc(db, 'taskSystem', 'mainProjects');
 export const subscribeToProjects = (callback) => {
   return onSnapshot(DOC_REF, (docSnap) => {
     if (docSnap.exists()) {
-      callback(docSnap.data().projects || []);
+      const projects = docSnap.data().projects || [];
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      // Auto-calculate isDelayed and override status if delayed
+      const processedProjects = projects.map(p => ({
+        ...p,
+        tasks: p.tasks.map(t => {
+          const endDate = new Date(t.endDate);
+          endDate.setHours(0, 0, 0, 0);
+          
+          const isActive = t.status !== 'Đã hoàn thành' && t.status !== 'Chờ nghiệm thu';
+          const isDelayedObj = isActive && (today > endDate);
+          
+          return {
+            ...t,
+            isDelayed: isDelayedObj,
+            // Cập nhật nhãn label hiển thị nếu thực sự bị trễ
+            status: (isDelayedObj && (t.status === 'Đang thực hiện' || t.status === 'Mới giao')) ? 'Trễ tiến độ' : t.status 
+          };
+        })
+      }));
+
+      callback(processedProjects);
     } else {
       callback([]); // Dữ liệu trống nếu document chưa được tạo
     }
