@@ -218,12 +218,6 @@ export default function ReportArchivePage() {
                       <FiCalendar style={{color: '#64748B'}} />
                       <span style={{color: '#475569'}}>{report.ngay}</span>
                     </div>
-                    {report.originalData?.meta?.isFakeReport && (
-                      <div style={{color: '#DC2626', fontSize: '13px', fontWeight: 700, display: 'flex', alignItems: 'center', background: '#FEF2F2', padding: '4px 10px', borderRadius: '4px', width: 'fit-content', border: '1px solid #FCA5A5'}}>
-                        <FiAlertTriangle style={{marginRight: '6px'}} /> 
-                        Báo cáo nghi vấn sao chép dữ liệu
-                      </div>
-                    )}
                   </div>
 
 

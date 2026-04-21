@@ -8,9 +8,9 @@ import styles from './ChatPanel.module.css';
 import { FiPaperclip, FiSend, FiMapPin, FiTrendingUp, FiFileText, FiExternalLink } from 'react-icons/fi';
 import { BsRobot } from 'react-icons/bs';
 import { useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
-import { sendMessage, buildReportContext } from '../../services/geminiService';
+import { sendMessage, buildReportContext, buildTaskContext } from '../../services/geminiService';
 
 /* Gợi ý mẫu */
 const SUGGESTIONS = [
@@ -68,16 +68,41 @@ export default function ChatPanel() {
 
     try {
       /* Truyền TOÀN BỘ context hệ thống TRỰC TIẾP TỪ FIREBASE */
+      // 1. Context Báo Cáo
       const snapshot = await getDocs(collection(db, 'reports_v2'));
       const activeReports = [];
-      snapshot.forEach(doc => {
-        activeReports.push({ id: doc.id, ...doc.data() });
+      snapshot.forEach(docSnap => {
+        activeReports.push({ id: docSnap.id, ...docSnap.data() });
       });
       const dynamicSystemContext = buildReportContext(activeReports);
 
+      // 2. Context Công Việc
+      const taskDocSnap = await getDoc(doc(db, 'taskSystem', 'mainProjects'));
+      const activeProjects = taskDocSnap.exists() ? (taskDocSnap.data().projects || []) : [];
+      // Tái tính toán trạng thái isDelayed theo logic của taskService
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const processedProjects = activeProjects.map(p => ({
+        ...p,
+        tasks: p.tasks.map(t => {
+          const endDate = new Date(t.endDate);
+          endDate.setHours(0, 0, 0, 0);
+          const isActive = t.status !== 'Đã hoàn thành' && t.status !== 'Chờ nghiệm thu';
+          const isDelayedObj = isActive && (today > endDate);
+          return {
+            ...t,
+            isDelayed: isDelayedObj,
+            status: (isDelayedObj && (t.status === 'Đang thực hiện' || t.status === 'Mới giao')) ? 'Trễ tiến độ' : t.status 
+          };
+        })
+      }));
+      const dynamicTaskContext = buildTaskContext(processedProjects);
+
       const allMessages = [...messages, userMsg];
       const history = toGeminiHistory(allMessages);
-      const aiResponse = await sendMessage(history, dynamicSystemContext);
+      
+      // Chuyền cả 2 Context vào cho Agent
+      const aiResponse = await sendMessage(history, dynamicSystemContext, dynamicTaskContext);
       const aiTime = new Date().toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' });
 
       let finalAiResponse = aiResponse;

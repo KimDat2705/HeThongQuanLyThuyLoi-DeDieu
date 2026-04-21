@@ -29,16 +29,6 @@ export default function ReportDocument({ report }) {
     <section className={styles.documentArea} id="report-document">
       <div className={styles.paper}>
 
-        {meta?.isFakeReport && (
-          <div style={{ position: 'sticky', top: '45px', zIndex: 100, pointerEvents: 'none', width: '100%' }}>
-            <div style={{ position: 'absolute', top: '-15px', left: '-90px', transform: 'rotate(-35deg)', opacity: 0.9 }}>
-              <div style={{ border: '3px double #DC2626', color: '#DC2626', padding: '6px 16px', fontSize: '10px', fontWeight: 900, textTransform: 'uppercase', borderRadius: '6px', background: 'rgba(254, 226, 226, 0.95)', boxShadow: '0 4px 15px rgba(220, 38, 38, 0.3)' }}>
-                NGHI VẤN SAO CHÉP DỮ LIỆU
-              </div>
-            </div>
-          </div>
-        )}
-
         {/* ===== HEADER CƠ QUAN ===== */}
         <div className={styles.docHeader}>
           <div className={styles.docHeaderLeft}>

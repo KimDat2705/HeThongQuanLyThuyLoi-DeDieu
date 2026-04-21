@@ -7,9 +7,9 @@ import ExecutiveWidgets from '../ExecutiveWidgets/ExecutiveWidgets';
 
 const overallStatus = 'warning';
 const statusConfig = {
-  good:    { color: '#2E7D32', bg: '#E8F5E9', label: 'BÌNH THƯỜNG',  emoji: '✅' },
-  warning: { color: '#E65100', bg: '#FFF8E1', label: 'CẦN THEO DÕI', emoji: '⚠️' },
-  danger:  { color: '#E53935', bg: '#FFEBEE', label: 'KHẨN CẤP',     emoji: '🚨' },
+  good:    { color: '#2E7D32', bg: '#E8F5E9', label: 'BÌNH THƯỜNG (chỉ là giả lập)',  emoji: '✅' },
+  warning: { color: '#E65100', bg: '#FFF8E1', label: 'CẦN THEO DÕI (chỉ là giả lập)', emoji: '⚠️' },
+  danger:  { color: '#E53935', bg: '#FFEBEE', label: 'KHẨN CẤP (chỉ là giả lập)',     emoji: '🚨' },
 };
 
 

@@ -5,6 +5,7 @@ import styles from './TaskManagementPage.module.css';
 import GanttChart from '../../components/GanttChart/GanttChart';
 import { summaryData, GLOBAL_CHART_START, GLOBAL_CHART_END } from '../../data/mockTaskData';
 import { subscribeToProjects, saveProjectsToCloud } from '../../services/taskService';
+import { getAllUsers } from '../../services/userService';
 import { diffDays } from '../../utils/dateUtils';
 
 export default function TaskManagementPage() {
@@ -12,11 +13,24 @@ export default function TaskManagementPage() {
   const isCompletedTab = location.pathname.includes('da-hoan-thanh');
 
   const [projects, setProjects] = useState([]);
+  const [allUsers, setAllUsers] = useState([]);
 
   useEffect(() => {
     const unsubscribe = subscribeToProjects((liveData) => {
       setProjects(liveData);
     });
+    
+    // Fetch users for assignment dropdown
+    const fetchUsers = async () => {
+      try {
+        const users = await getAllUsers();
+        setAllUsers(users.filter(u => u.role !== 'admin')); // Không giao việc cho admin
+      } catch (err) {
+        console.error("Lỗi khi tải danh sách người dùng:", err);
+      }
+    };
+    fetchUsers();
+
     return () => unsubscribe();
   }, []);
   const [showModal, setShowModal] = useState(false);
@@ -298,9 +312,19 @@ export default function TaskManagementPage() {
                 <label>Giao cho (Người phụ trách)</label>
                 <select name="assignee" className={styles.inputField} required>
                   <option value="">-- Chọn cán bộ/ phòng ban --</option>
-                  <option value="Trưởng phòng Quản lý đê điều">Trưởng phòng Quản lý đê điều</option>
-                  <option value="Trưởng phòng QLDA ĐTXD">Trưởng phòng QLDA ĐTXD</option>
-                  <option value="Phó phòng Hành chính">Phó phòng Hành chính</option>
+                  {allUsers.map((u) => (
+                    <option key={u.id} value={u.fullName}>
+                      {u.fullName} ({u.title})
+                    </option>
+                  ))}
+                  {/* Dự phòng option cũ nếu chưa load kịp */}
+                  {allUsers.length === 0 && (
+                    <>
+                      <option value="Trưởng phòng Quản lý đê điều">Trưởng phòng Quản lý đê điều</option>
+                      <option value="Trưởng phòng QLDA ĐTXD">Trưởng phòng QLDA ĐTXD</option>
+                      <option value="Phó phòng Hành chính">Phó phòng Hành chính</option>
+                    </>
+                  )}
                 </select>
               </div>
 

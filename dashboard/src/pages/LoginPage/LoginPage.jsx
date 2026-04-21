@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loginWithFirebase } from '../../services/userService';
 import styles from './LoginPage.module.css';
 import { FiUser, FiLock, FiEye, FiEyeOff, FiShield, FiDroplet } from 'react-icons/fi';
 
@@ -10,28 +11,28 @@ export default function LoginPage({ onLogin }) {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
 
-    // Mock Authentication Logic
-    // In production, this would call Firebase Auth
-    if (username === 'admin' && password === 'admin@123') {
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userRole', 'admin');
-      localStorage.setItem('userName', 'Admin');
-      localStorage.setItem('userTitle', 'Giám đốc Sở');
-      onLogin(true);
-      navigate('/');
-    } else if (username === 'user' && password === 'user@123') {
-      localStorage.setItem('isAuthenticated', 'true');
-      localStorage.setItem('userRole', 'user');
-      localStorage.setItem('userName', 'Nguyễn Văn A');
-      localStorage.setItem('userTitle', 'Trưởng phòng Quản lý đê điều');
-      onLogin(true);
-      navigate('/');
-    } else {
-      setError('Tên đăng nhập hoặc mật khẩu không chính xác.');
+    try {
+      const user = await loginWithFirebase(username, password);
+      
+      if (user) {
+        localStorage.setItem('isAuthenticated', 'true');
+        localStorage.setItem('userRole', user.role);
+        localStorage.setItem('userName', user.fullName);
+        localStorage.setItem('userTitle', user.title);
+        localStorage.setItem('permissions', JSON.stringify(user.permissions || []));
+        
+        onLogin(true);
+        navigate('/');
+      } else {
+        setError('Tên đăng nhập hoặc mật khẩu không chính xác.');
+      }
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('Đã xảy ra lỗi khi đăng nhập. Vui lòng thử lại.');
     }
   };
 

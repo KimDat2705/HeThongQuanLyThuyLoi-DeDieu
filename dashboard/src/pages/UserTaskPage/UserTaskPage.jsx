@@ -9,6 +9,7 @@ export default function UserTaskPage() {
   const [tasks, setTasks] = useState([]);
   const [updateModal, setUpdateModal] = useState({ isOpen: false, task: null, newProgress: 0, newNote: '' });
   const userTitle = localStorage.getItem('userTitle') || 'Trưởng phòng Quản lý đê điều';
+  const userName = localStorage.getItem('userName') || 'Nguyễn Văn A';
   const location = useLocation();
   const isCompletedTab = location.pathname.includes('da-hoan-thanh');
   
@@ -20,7 +21,7 @@ export default function UserTaskPage() {
       const myTasks = [];
       liveData.forEach(project => {
         project.tasks.forEach(task => {
-          if (task.assignee === userTitle) {
+          if (task.assignee === userTitle || task.assignee === userName) {
             myTasks.push({ ...task, projectName: project.name, projectId: project.id });
           }
         });
@@ -28,7 +29,7 @@ export default function UserTaskPage() {
       setTasks(myTasks);
     });
     return () => unsubscribe();
-  }, [userTitle]);
+  }, [userTitle, userName]);
 
   const openUpdateModal = (task) => {
     setUpdateModal({

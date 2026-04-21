@@ -1,0 +1,289 @@
+.pageContainer {
+  padding: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.titleInfo h2 {
+  font-size: 1.5rem;
+  color: var(--primary-1000);
+  margin-bottom: 4px;
+}
+
+.titleInfo p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.btnAdd {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: var(--primary-500, #0052cc);
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btnAdd:hover {
+  background-color: var(--primary-600, #0045b3);
+  transform: translateY(-1px);
+}
+
+.tableCard {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  overflow-x: auto;
+}
+
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.userTable th, .userTable td {
+  padding: 14px 16px;
+  text-align: left;
+  border-bottom: 1px solid #ebebeb;
+  font-size: 0.9rem;
+}
+
+.userTable th {
+  background-color: #f8fafc;
+  color: #475569;
+  font-weight: 600;
+}
+
+.userTable tbody tr:hover {
+  background-color: #f8fafc;
+}
+
+.roleBadge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.roleBadge.admin {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+.roleBadge.leader {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.roleBadge.user {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+.permsCell {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.permPill {
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-size: 0.75rem;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  color: #64748b;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.actionBtn:hover {
+  background-color: #e2e8f0;
+  color: var(--primary-600, #0052cc);
+}
+
+.actionBtn.danger:hover {
+  color: #ef4444;
+  background-color: #fee2e2;
+}
+
+/* Modal Styles */
+.modalOverlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+.modalContent {
+  background: white;
+  width: 90%;
+  max-width: 650px;
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.modalContent h3 {
+  margin-bottom: 20px;
+  font-size: 1.25rem;
+  color: #1e293b;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 12px;
+}
+
+.formRow {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.formGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.formGroup label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #475569;
+}
+
+.req {
+  color: #ef4444;
+}
+
+.formGroup input, .formGroup select {
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.formGroup input:disabled {
+  background: #f1f5f9;
+  cursor: not-allowed;
+}
+
+.formGroup input:focus, .formGroup select:focus {
+  border-color: var(--primary-500, #0052cc);
+  box-shadow: 0 0 0 2px rgba(0,82,204,0.1);
+}
+
+.permsSection {
+  margin-top: 8px;
+  border-top: 1px solid #e2e8f0;
+  padding-top: 16px;
+}
+
+.permsTitle {
+  display: block;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+}
+
+.permsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  background: #f8fafc;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.permCheckbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #475569;
+  cursor: pointer;
+}
+
+.permCheckbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+  accent-color: var(--primary-500, #0052cc);
+}
+
+.modalActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.btnCancel {
+  background: white;
+  border: 1px solid #cbd5e1;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  color: #475569;
+  transition: all 0.2s;
+}
+
+.btnCancel:hover {
+  background: #f1f5f9;
+}
+
+.btnSave {
+  background: var(--primary-500, #0052cc);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.btnSave:hover {
+  background: var(--primary-600, #0045b3);
+}

@@ -12,6 +12,7 @@ import DataEntryPage from './pages/DataEntryPage/DataEntryPage';
 import LoginPage from './pages/LoginPage/LoginPage';
 import TaskManagementPage from './pages/TaskManagementPage/TaskManagementPage';
 import UserTaskPage from './pages/UserTaskPage/UserTaskPage';
+import UserManagementPage from './pages/UserManagementPage/UserManagementPage';
 import WeatherPage from './pages/WeatherPage/WeatherPage';
 import FloodStatusPage from './pages/FloodStatusPage/FloodStatusPage';
 import PumpStationMapPage from './pages/MockPages/PumpStationMapPage';
@@ -74,7 +75,8 @@ function App() {
               <Route path="/nha-thau" element={<ContractorsPage />} />
               <Route path="/bao-cao" element={<ReportArchivePage />} />
               <Route path="/nhap-lieu" element={<DataEntryPage />} />
-              <Route path="/cong-viec/*" element={userRole === 'user' ? <UserTaskPage /> : <TaskManagementPage />} />
+              <Route path="/cong-viec/*" element={userRole === 'admin' ? <TaskManagementPage /> : <UserTaskPage />} />
+              {userRole === 'admin' && <Route path="/phan-quyen" element={<UserManagementPage />} />}
               <Route
                 path="/bao-cao/:reportId"
                 element={

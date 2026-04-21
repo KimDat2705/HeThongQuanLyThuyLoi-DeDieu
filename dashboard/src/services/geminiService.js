@@ -4,8 +4,10 @@
    ============================================ */
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
-const MODEL = 'gemini-3-flash-preview';
+const MODEL = 'gemini-3.1-pro-preview';
 const BASE_URL = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}`;
+
+import { buildSqlContext } from '../data/mockSqlDatabase';
 
 /**
  * System prompt: Vai trò AI chuyên thủy lợi & đê điều Bắc Ninh
@@ -71,27 +73,132 @@ export function buildReportContext(archiveData) {
 }
 
 /**
- * Gọi Gemini API để chat
+ * Tạo context từ kho dữ liệu Tiến độ công việc trên Firebase
+ */
+export function buildTaskContext(projectsData) {
+  if (!projectsData || !Array.isArray(projectsData)) return '';
+
+  let contextStr = `\n\n--- BẢNG THEO DÕI TIẾN ĐỘ CÔNG VIỆC TRÊN HỆ THỐNG ---\n`;
+  
+  projectsData.forEach(project => {
+    contextStr += `* QUẢN LÝ DỰ ÁN: [${project.projectName}]\n`;
+    if (project.tasks && project.tasks.length > 0) {
+      project.tasks.forEach(task => {
+        contextStr += `  - Nhiệm vụ: "${task.taskName}". Hạn chót: ${task.endDate}. `;
+        contextStr += `Người phụ trách: ${task.assignee}. Trạng thái hiện tại: ${task.status}. `;
+        if (task.isDelayed) {
+          contextStr += `(⚠️ ĐANG BỊ TRỄ TIẾN ĐỘ!)`;
+        }
+        contextStr += `\n`;
+      });
+    } else {
+      contextStr += `  - Dự án chưa có công việc nào được giao.\n`;
+    }
+  });
+
+  contextStr += `LƯU Ý: Khi người dùng hỏi "Ai đang nợ việc", "Công việc nào trễ hạn", hãy dùng bảng này để xướng tên và chỉ rõ. Khi hỏi về tiến độ dự án, hãy tóm tắt các công việc trong dự án đó.\n`;
+  return contextStr;
+}
+
+/**
+ * BƯỚC 1: ROUTER AGENT
+ * Phân tích intent người dùng và định tuyến vào DB tương ứng.
+ * Sử dụng tính năng Function Calling của Gemini 3.1 Pro.
+ */
+export async function analyzeIntent(recentQuery) {
+  if (!API_KEY) throw new Error('Chưa cấu hình VITE_GEMINI_API_KEY trong file .env');
+  
+  // Dùng Gemini Flash chạy Router cho siêu tốc độ (Tránh để user đợi 2 model Pro xử lý)
+  const routerUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${API_KEY}`;
+  
+  const body = {
+    contents: [{ role: 'user', parts: [{ text: `Câu hỏi người dùng: "${recentQuery}"\n\nHãy quyết định truy vấn vào các Database nào.` }] }],
+    system_instruction: {
+      parts: [{text: `Bạn là Router Agent trong hệ thống Thủy lợi Bắc Ninh. Nhiệm vụ của bạn là bẻ lái câu lệnh của người dùng tới các Database thích hợp.\nCó 3 Database:\n1. REPORT: Chứa kho báo cáo PCTT, báo cáo bão, các văn bản quy định, ngập lụt, chữ nghĩa tự nhiên.\n2. TASK: Chứa danh sách dự án, công việc, tiến độ giao việc, ai làm việc gì, ai trễ hạn.\n3. SQL: Chứa số liệu kế toán, tiền bạc, quỹ giải ngân, danh sách máy bơm, tài sản cố định tĩnh.\nSử dụng function 'route_query' để trả về 1 hoặc nhiều mảng ['REPORT', 'TASK', 'SQL'].`}]
+    },
+    tools: [{
+      functionDeclarations: [{
+        name: "route_query",
+        description: "Lựa chọn đích đến truy vấn thích hợp",
+        parameters: {
+          type: "OBJECT",
+          properties: {
+            targets: {
+              type: "ARRAY",
+              items: { type: "STRING", enum: ["REPORT", "TASK", "SQL"] },
+              description: "Danh sách database. Nhập 'REPORT' nếu muốn báo cáo, 'TASK' cho tiến độ công tác, 'SQL' nếu cần tính toán số liệu tĩnh/vật tư."
+            }
+          },
+          required: ["targets"]
+        }
+      }]
+    }],
+    toolConfig: {
+      functionCallingConfig: {
+        mode: "ANY",
+        allowedFunctionNames: ["route_query"]
+      }
+    }
+  };
+
+  const res = await fetch(routerUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+  const data = await res.json();
+  
+  try {
+    const targets = data.candidates[0].content.parts[0].functionCall.args.targets;
+    return targets;
+  } catch (e) {
+    return ["REPORT"]; // fallback
+  }
+}
+
+/**
+ * BƯỚC 2 & 3: LẤY DATA VÀ SYNTHESIZER AGENT
+ * Gọi Gemini API để chat với Context đã chọn lọc.
  * @param {Array} history - Lịch sử chat [{role: 'user'|'model', parts: [{text}]}]
- * @param {string} reportContext - Context dữ liệu báo cáo
+ * @param {string} reportContext - Context dữ liệu báo cáo (REPORT DB)
+ * @param {string} taskContext - Context dữ liệu tiến độ công việc (TASK DB)
  * @returns {Promise<string>} - Phản hồi từ AI
  */
-export async function sendMessage(history, reportContext = '') {
+export async function sendMessage(history, reportContext = '', taskContext = '') {
   if (!API_KEY) {
     throw new Error('Chưa cấu hình VITE_GEMINI_API_KEY trong file .env');
   }
 
+  // 1. Phân tích tin nhắn mới nhất để biết cần truy cập csdl nào
+  const lastUserMessage = history.filter(m => m.role === 'user').pop();
+  const query = lastUserMessage?.parts[0]?.text || '';
+  
+  const routingTargets = await analyzeIntent(query);
+  console.log("🚀 Lãnh đạo ra lệnh. Router Agent bẻ lái qua nhánh:", routingTargets);
+
+  // 2. Gom dữ liệu theo Router quyết định
+  let combinedContext = '';
+  if (routingTargets.includes('REPORT')) {
+    combinedContext += reportContext + '\n';
+  }
+  if (routingTargets.includes('TASK')) {
+    combinedContext += taskContext + '\n';
+  }
+  if (routingTargets.includes('SQL')) {
+    combinedContext += buildSqlContext() + '\n';
+  }
+
+  // Debug để thấy System Prompt đã nhét DB nào
+  console.log("🗄️ Context Loaded cho Synthesizer Agent:\n", combinedContext.substring(0, 150) + "...");
+
+  // 3. Synthesizer xử lý với Temperature thấp (0.2) nhằm tránh ảo giác
   const url = `${BASE_URL}:generateContent?key=${API_KEY}`;
 
   const body = {
     system_instruction: {
-      parts: [{ text: SYSTEM_INSTRUCTION + '\n\n' + reportContext }]
+      parts: [{ text: SYSTEM_INSTRUCTION + '\n\n' + combinedContext }]
     },
     contents: history,
     generationConfig: {
-      temperature: 0.7,
+      temperature: 0.2, 
       topP: 0.9,
-      maxOutputTokens: 1024,
+      maxOutputTokens: 2048,
     },
   };
 

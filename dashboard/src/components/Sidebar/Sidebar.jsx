@@ -46,6 +46,23 @@ const navItems = [
 export default function Sidebar({ hidden = false, userRole, userTitle }) {
   const [expandedKeys, setExpandedKeys] = useState({});
   const toggleExpand = (key) => setExpandedKeys(p => ({ ...p, [key]: !p[key] }));
+  
+  const userPermissions = JSON.parse(localStorage.getItem('permissions') || '[]');
+
+  const permissionMap = {
+    'Tổng quan': 'OVERVIEW',
+    'Công việc': 'TASKS',
+    'Nhập liệu': 'DATA_ENTRY',
+    'Thiệt hại & Báo cáo': 'REPORT',
+    'Dự báo thời tiết': 'WEATHER',
+    'Tình hình ngập lụt': 'FLOOD',
+    'Bản đồ trạm bơm': 'PUMP_MAP',
+    'Quản lý đê điều': 'DIKE',
+    'Biểu đồ mực nước': 'WATER_LEVEL',
+    'Danh mục dự án': 'PROJECTS',
+    'Tiến độ & Giải ngân': 'DISBURSEMENT',
+    'Hồ sơ & Nhà thầu': 'CONTRACTORS',
+  };
 
   const dynamicNavItems = navItems.map((group, index) => {
     if (index === 0) {
@@ -78,22 +95,13 @@ export default function Sidebar({ hidden = false, userRole, userTitle }) {
       {dynamicNavItems.map((group, gi) => {
         const filteredItems = group.items.filter(item => {
           if (userRole === 'admin') {
-            if (item.label === 'Nhập liệu') return false;
+            if (item.label === 'Nhập liệu') return false; // Thường admin không cần nhập liệu
             return true;
           }
-          return !!item.path || !!item.subItems; // Users only see functional pages or submenus
+          if (item.label === 'Nhập liệu') return true;
+          const requiredPerm = permissionMap[item.label];
+          return userPermissions.includes(requiredPerm);
         });
-
-        if (userRole !== 'admin') {
-          const title = (userTitle || '').toLowerCase();
-          
-          if (group.section === 'TRẠM BƠM & ĐÊ ĐIỀU') {
-            if (!title.includes('đê điều') && !title.includes('trạm bơm') && !title.includes('thủy lợi')) return null;
-          }
-          if (group.section === 'QUẢN LÝ ĐẦU TƯ XÂY DỰNG') {
-             if (!title.includes('đầu tư') && !title.includes('xây dựng')) return null;
-          }
-        }
 
         if (filteredItems.length === 0) return null;
 
@@ -162,6 +170,12 @@ export default function Sidebar({ hidden = false, userRole, userTitle }) {
 
       {/* Settings */}
       <div className={styles.sidebarBottom}>
+        {userRole === 'admin' && (
+           <NavLink to="/phan-quyen" className={({ isActive }) => `${styles.navItem} ${isActive ? styles.active : ''}`} onClick={() => setExpandedKeys({})}>
+             <span className={styles.navIcon}><FiUsers /></span>
+             <span className={styles.navText}>Phân quyền Hệ thống</span>
+           </NavLink>
+        )}
         <div className={styles.navItem} id="nav-settings">
           <span className={styles.navIcon}><FiSettings /></span>
           <span className={styles.navText}>Cài đặt</span>
